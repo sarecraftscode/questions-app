@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
-import { Question } from 'src/app/core/entities/question.entity';
+import { Question } from 'src/domain/entities/question.entity';
 
 @Component({
     selector: 'app-question-card',

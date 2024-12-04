@@ -1,4 +1,4 @@
-import { Question, QuestionImpl } from "src/app/core/entities/question.entity";
+import { Question, QuestionImpl } from "src/domain/entities/question.entity";
 
 const softwareCraftmanshipQuestions = [
   "Explain Test-Driven Development (TDD) and its benefits",

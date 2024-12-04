@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Question } from 'src/app/core/entities/question.entity';
+import { Question } from 'src/domain/entities/question.entity';
 import { generateQuestions } from './questions-data';
 
 @Injectable({

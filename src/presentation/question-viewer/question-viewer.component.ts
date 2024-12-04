@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule, NgIf, NgClass } from '@angular/common';
-import { Question } from '../core/entities/question.entity';
+import { Question } from '../../domain/entities/question.entity';
 
 @Component({
     selector: 'app-question-viewer',

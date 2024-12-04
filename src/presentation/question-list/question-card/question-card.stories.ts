@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { QuestionCardComponent } from './question-card.component';
-import { QuestionImpl } from 'src/app/core/entities/question.entity';
+import { QuestionImpl } from 'src/domain/entities/question.entity';
 
 const meta: Meta<QuestionCardComponent> = {
   title: 'Components/QuestionCard',

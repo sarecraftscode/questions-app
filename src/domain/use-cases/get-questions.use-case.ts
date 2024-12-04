@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { QuestionRepository } from '../repositories/question.repository';
 import { Question } from '../entities/question.entity';
-import { IQuestionRepository } from 'src/app/app.module';
+import { IQuestionRepository } from 'src/presentation/app.module';
 
 
 @Injectable({

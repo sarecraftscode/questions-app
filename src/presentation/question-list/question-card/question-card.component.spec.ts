@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { QuestionCardComponent } from './question-card.component';
-import { QuestionImpl } from 'src/app/core/entities/question.entity';
+import { QuestionImpl } from 'src/domain/entities/question.entity';
 
 describe('QuestionCardComponent', () => {
   it('should create with question input', () => {

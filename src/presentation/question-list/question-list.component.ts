@@ -1,42 +1,17 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Question } from '../../app/core/entities/question.entity';
-import { GetQuestionsByCategoryUseCase } from '../../app/core/use-cases/get-questions-by-category.use-case';
-import { MarkQuestionAnsweredUseCase } from '../../app/core/use-cases/mark-questions-answered.use-case';
+import { CommonModule, NgIf } from '@angular/common';
+import { CategorySelectionComponent } from '../category-selection/category-selection.component';
+import { QuestionViewerComponent } from '../question-viewer/question-viewer.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { Question } from '../../domain/entities/question.entity';
+import { GetQuestionsByCategoryUseCase } from '../../domain/use-cases/get-questions-by-category.use-case';
+import { MarkQuestionAnsweredUseCase } from '../../domain/use-cases/mark-questions-answered.use-case';
 
 @Component({
-  selector: 'app-question-list',
-  template: `
-    <div class="container mx-auto px-4 py-8">
-      <div *ngIf="!selectedCategory" class="mb-8">
-        <h2 class="text-2xl font-bold mb-6">Select a Category</h2>
-        <app-category-selection
-          (categorySelected)="onCategorySelected($event)">
-        </app-category-selection>
-      </div>
-
-      <div *ngIf="selectedCategory && questions.length > 0">
-        <div class="mb-8">
-          <button
-            (click)="resetCategory()"
-            class="text-blue-600 hover:text-blue-800">
-            ← Back to Categories
-          </button>
-        </div>
-
-        <app-question-viewer
-          [questions]="questions"
-          (answered)="onQuestionAnswered($event)">
-        </app-question-viewer>
-
-        <app-progress-bar
-          [current]="answeredCount"
-          [total]="totalQuestions"
-          [percentage]="progressPercentage">
-        </app-progress-bar>
-      </div>
-    </div>
-  `
+    selector: 'app-question-list',
+    templateUrl: './question-list.component.html',
+    standalone: true,
+    imports: [NgIf, CategorySelectionComponent, QuestionViewerComponent, ProgressBarComponent]
 })
 export class QuestionListComponent {
   selectedCategory: string | null = null;
