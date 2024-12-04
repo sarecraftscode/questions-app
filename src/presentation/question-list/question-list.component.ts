@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategorySelectionComponent } from '../category-selection/category-selection.component';
-import { QuestionViewerComponent } from '../question-viewer/question-viewer.component';
-import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { Question } from '../../app/core/entities/question.entity';
 import { GetQuestionsByCategoryUseCase } from '../../app/core/use-cases/get-questions-by-category.use-case';
 import { MarkQuestionAnsweredUseCase } from '../../app/core/use-cases/mark-questions-answered.use-case';

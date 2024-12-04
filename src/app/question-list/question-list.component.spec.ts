@@ -3,10 +3,13 @@ import { QuestionListComponent } from './question-list.component';
 import { of } from 'rxjs';
 import { GetQuestionsUseCase } from 'src/app/core/use-cases/get-questions.use-case';
 import { QuestionImpl } from 'src/app/core/entities/question.entity';
+import { GetQuestionsByCategoryUseCase } from '../core/use-cases/get-questions-by-category.use-case';
+import { MarkQuestionAnsweredUseCase } from '../core/use-cases/mark-questions-answered.use-case';
 
 describe('QuestionListComponent', () => {
   let component: QuestionListComponent;
-  let mockGetQuestionsUseCase: GetQuestionsUseCase;
+  let mockMarkQuestionAnsweredUseCase: MarkQuestionAnsweredUseCase;
+  let mockGetQuestionsByCategoryUseCase: GetQuestionsByCategoryUseCase;
 
   beforeEach(() => {
     const mockQuestions = [
@@ -14,15 +17,18 @@ describe('QuestionListComponent', () => {
       new QuestionImpl(2, 'Test Question 2', 'Category 2', true)
     ];
 
-    mockGetQuestionsUseCase = {
-      execute: () => of(mockQuestions)
-    } as GetQuestionsUseCase;
+    mockMarkQuestionAnsweredUseCase = {
+      execute: (id: number, isCorrect: boolean) => of(void 0)
+    } as MarkQuestionAnsweredUseCase;
 
-    component = new QuestionListComponent(mockGetQuestionsUseCase);
+    mockGetQuestionsByCategoryUseCase = {
+      execute: (category: string) => of(mockQuestions)
+    } as GetQuestionsByCategoryUseCase;
+
+    component = new QuestionListComponent(mockGetQuestionsByCategoryUseCase, mockMarkQuestionAnsweredUseCase);
   });
 
   it('should calculate progress correctly', () => {
-    component.ngOnInit();
     expect(component.progressPercentage).toBe(50);
     expect(component.answeredCount).toBe(1);
     expect(component.totalQuestions).toBe(2);
