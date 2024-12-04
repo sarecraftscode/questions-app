@@ -10,5 +10,4 @@ import { NavigationComponent } from './navigation/navigation.component';
     imports: [NavigationComponent, RouterOutlet]
 })
 export class AppComponent {
-  title = 'questions-app';
 }
