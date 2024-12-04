@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Question } from 'src/domain/entities/question.entity';
 import { generateQuestions } from './questions-data';
+import { Question } from '../../domain/entities/question.entity';
 
 @Injectable({
   providedIn: 'root'

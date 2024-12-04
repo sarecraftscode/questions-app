@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { QuestionListComponent } from './question-list.component';
 import { of } from 'rxjs';
-import { GetQuestionsUseCase } from 'src/domain/use-cases/get-questions.use-case';
-import { QuestionImpl } from 'src/domain/entities/question.entity';
+import { QuestionImpl } from '../../domain/entities/question.entity';
 
 const mockQuestions = [
   new QuestionImpl(1, 'What is Clean Architecture?', 'Software Craftsmanship', false),
