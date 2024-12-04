@@ -1,10 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf, NgClass } from '@angular/common';
 import { Question } from '../core/entities/question.entity';
 
 @Component({
-  selector: 'app-question-viewer',
-  templateUrl: './question-viewer.component.html',
+    selector: 'app-question-viewer',
+    templateUrl: './question-viewer.component.html',
+    standalone: true,
+    imports: [NgIf, NgClass],
 })
 export class QuestionViewerComponent {
   @Input() questions: Question[] = [];

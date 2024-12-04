@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { CategorySelectionComponent } from '../category-selection/category-selection.component';
 import { QuestionViewerComponent } from '../question-viewer/question-viewer.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
@@ -8,8 +8,10 @@ import { GetQuestionsByCategoryUseCase } from '../core/use-cases/get-questions-b
 import { MarkQuestionAnsweredUseCase } from '../core/use-cases/mark-questions-answered.use-case';
 
 @Component({
-  selector: 'app-question-list',
-  templateUrl: './question-list.component.html'
+    selector: 'app-question-list',
+    templateUrl: './question-list.component.html',
+    standalone: true,
+    imports: [NgIf, CategorySelectionComponent, QuestionViewerComponent, ProgressBarComponent]
 })
 export class QuestionListComponent {
   selectedCategory: string | null = null;

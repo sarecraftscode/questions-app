@@ -8,8 +8,8 @@ describe('QuestionViewerComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [QuestionViewerComponent]
-    });
+    imports: [QuestionViewerComponent]
+});
     fixture = TestBed.createComponent(QuestionViewerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

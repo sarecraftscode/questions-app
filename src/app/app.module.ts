@@ -16,26 +16,4 @@ import { PricingPageComponent } from './pricing-page/pricing-page.component';
 
 export const IQuestionRepository = new InjectionToken<QuestionRepository>('QuestionRepository');
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    QuestionListComponent,
-    ProgressBarComponent,
-    QuestionCardComponent,
-    CategorySelectionComponent,
-    QuestionViewerComponent,
-    NavigationComponent,
-    LandingPageComponent,
-    PricingPageComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [
-      { provide: IQuestionRepository, useValue: new QuestionRepositoryImpl() }
 
-  ],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }

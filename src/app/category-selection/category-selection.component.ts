@@ -1,11 +1,13 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CATEGORIES, QUESTION_COUNT_OPTIONS, Category } from '../core/models/category.model';
 
 @Component({
-  selector: 'app-category-selection',
-  templateUrl: './category-selection.component.html',
+    selector: 'app-category-selection',
+    templateUrl: './category-selection.component.html',
+    standalone: true,
+    imports: [NgFor, NgIf],
 })
 export class CategorySelectionComponent {
   categories = CATEGORIES;
