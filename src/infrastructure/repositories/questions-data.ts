@@ -1,4 +1,4 @@
-import { Question, QuestionImpl } from "src/domain/entities/question.entity";
+import { Question } from "../../domain/entities/question.entity";
 
 const softwareCraftmanshipQuestions = [
   "Explain Test-Driven Development (TDD) and its benefits",
@@ -33,17 +33,17 @@ export function generateQuestions(): Question[] {
 
   // Generate Software Craftsmanship questions
   softwareCraftmanshipQuestions.forEach(text => {
-    questions.push(new QuestionImpl(id++, text, 'Software Craftsmanship'));
+    questions.push(new Question(id++, text, 'Software Craftsmanship'));
   });
 
   // Generate Backend Development questions
   backendDevelopmentQuestions.forEach(text => {
-    questions.push(new QuestionImpl(id++, text, 'Backend Development'));
+    questions.push(new Question(id++, text, 'Backend Development'));
   });
 
   // Generate Frontend Development questions
   frontendDevelopmentQuestions.forEach(text => {
-    questions.push(new QuestionImpl(id++, text, 'Frontend Development'));
+    questions.push(new Question(id++, text, 'Frontend Development'));
   });
 
   // Generate additional questions to reach 500 total
@@ -55,7 +55,7 @@ export function generateQuestions(): Question[] {
     const baseQuestion = baseQuestions[Math.floor(Math.random() * baseQuestions.length)];
     const variant = Math.floor(questions.length / baseQuestions.length) + 1;
 
-    questions.push(new QuestionImpl(
+    questions.push(new Question(
       id++,
       `${baseQuestion} (Variant ${variant})`,
       category

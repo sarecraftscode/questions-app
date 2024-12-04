@@ -1,10 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { QuestionListComponent } from './question-list.component';
 import { of } from 'rxjs';
-import { GetQuestionsUseCase } from 'src/domain/use-cases/get-questions.use-case';
-import { QuestionImpl } from 'src/domain/entities/question.entity';
 import { GetQuestionsByCategoryUseCase } from '../../domain/use-cases/get-questions-by-category.use-case';
 import { MarkQuestionAnsweredUseCase } from '../../domain/use-cases/mark-questions-answered.use-case';
+import { Question } from '../../domain/entities/question.entity';
 
 describe('QuestionListComponent', () => {
   let component: QuestionListComponent;
@@ -13,8 +12,8 @@ describe('QuestionListComponent', () => {
 
   beforeEach(() => {
     const mockQuestions = [
-      new QuestionImpl(1, 'Test Question 1', 'Category 1', false),
-      new QuestionImpl(2, 'Test Question 2', 'Category 2', true)
+      new Question(1, 'Test Question 1', 'Category 1', false),
+      new Question(2, 'Test Question 2', 'Category 2', true)
     ];
 
     mockMarkQuestionAnsweredUseCase = {

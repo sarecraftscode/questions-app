@@ -6,7 +6,7 @@ import { Question } from '../../domain/entities/question.entity';
 @Injectable({
   providedIn: 'root'
 })
-export class QuestionRepositoryImpl implements QuestionRepositoryImpl {
+export class QuestionRepositoryInMemory implements QuestionRepositoryInMemory {
   private questions: Question[] = generateQuestions();
 
   getQuestionsByCategory(category: string): Observable<Question[]> {
