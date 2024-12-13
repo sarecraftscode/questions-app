@@ -1,7 +1,7 @@
-import { Routes } from "@angular/router";
-import { LandingPageComponent } from "./presentation/landing-page/landing-page.component";
-import { QuestionListComponent } from "./presentation/question-list/question-list.component";
-import { PricingPageComponent } from "./presentation/pricing-page/pricing-page.component";
+import { Routes } from '@angular/router';
+import { LandingPageComponent } from './presentation/landing-page/landing-page.component';
+import { PricingPageComponent } from './presentation/pricing-page/pricing-page.component';
+import { QuestionListComponent } from './presentation/question-list/question-list.component';
 
 export const APP_ROUTES: Routes = [
   { path: '', component: LandingPageComponent },
