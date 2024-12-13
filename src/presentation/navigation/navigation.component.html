@@ -7,14 +7,18 @@
         </a>
       </div>
       <div class="flex space-x-4">
-        <a routerLink="/questions"
-           routerLinkActive="text-blue-600"
-           class="navigation-link">
+        <a
+          (click)="goToQuestions()"
+          routerLinkActive="text-blue-600"
+          class="navigation-link"
+        >
           Practice
         </a>
-        <a routerLink="/pricing"
-           routerLinkActive="text-blue-600"
-           class="navigation-link">
+        <a
+          routerLink="/pricing"
+          routerLinkActive="text-blue-600"
+          class="navigation-link"
+        >
           Pricing
         </a>
       </div>

@@ -1,12 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule, NgClass, NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from 'src/domain/entities/question.entity';
 
 @Component({
-    selector: 'app-question-card',
-    templateUrl: './question-card.component.html',
-    standalone: true,
-    imports: [NgClass, NgIf],
+  selector: 'app-question-card',
+  templateUrl: './question-card.component.html',
+  standalone: true,
+  imports: [NgClass, NgIf],
 })
 export class QuestionCardComponent {
   @Input() question!: Question;

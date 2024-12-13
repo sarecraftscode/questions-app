@@ -1,37 +1,22 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule, NgIf, NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from '../../domain/entities/question.entity';
 
 @Component({
-    selector: 'app-question-viewer',
-    templateUrl: './question-viewer.component.html',
-    standalone: true,
-    imports: [NgIf, NgClass],
+  selector: 'app-question-viewer',
+  templateUrl: './question-viewer.component.html',
+  standalone: true,
+  imports: [NgIf, NgClass],
 })
 export class QuestionViewerComponent {
   @Input() questions: Question[] = [];
+  @Input() currentIndex = 0;
   @Output() answered = new EventEmitter<{ id: number; isCorrect: boolean }>();
-
-  currentIndex = 0;
+  @Output() next = new EventEmitter<void>();
+  @Output() previous = new EventEmitter<void>();
 
   get currentQuestion(): Question | undefined {
     return this.questions[this.currentIndex];
-  }
-
-  get totalQuestions(): number {
-    return this.questions.length;
-  }
-
-  previousQuestion() {
-    if (this.currentIndex > 0) {
-      this.currentIndex--;
-    }
-  }
-
-  nextQuestion() {
-    if (this.currentIndex < this.questions.length - 1) {
-      this.currentIndex++;
-    }
   }
 
   onAnswer(isCorrect: boolean) {

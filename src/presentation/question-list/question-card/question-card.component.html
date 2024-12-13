@@ -1,26 +1,29 @@
 <div class="p-4 bg-white rounded-lg shadow-md">
   <div class="flex items-center justify-between mb-4">
     <h3 class="text-lg font-semibold">{{ question.text }}</h3>
-    <span class="px-3 py-1 text-sm rounded-full"
-          [ngClass]="getStatusClass()">
+    <span class="px-3 py-1 text-sm rounded-full" [ngClass]="getStatusClass()">
       {{ question.category }}
     </span>
   </div>
   <div class="flex justify-end space-x-2" *ngIf="!question.isAnswered">
     <button
       (click)="onAnswer(true)"
-      class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors">
+      class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+    >
       Correct Answer
     </button>
     <button
       (click)="onAnswer(false)"
-      class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors">
+      class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+    >
       Incorrect Answer
     </button>
   </div>
   <div *ngIf="question.isAnswered" class="mt-2">
     <p [ngClass]="question.isCorrect ? 'text-green-600' : 'text-red-600'">
-      {{ question.isCorrect ? '✓ Answered correctly' : '✗ Answered incorrectly' }}
+      {{
+        question.isCorrect ? "✓ Answered correctly" : "✗ Answered incorrectly"
+      }}
     </p>
   </div>
 </div>

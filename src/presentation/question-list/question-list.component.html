@@ -1,29 +1,34 @@
 <div class="container mx-auto px-4 py-8">
-  <div *ngIf="!selectedCategory" class="mb-8">
+  <div *ngIf="!state.selectedCategory()" class="mb-8">
     <h2 class="text-2xl font-bold mb-6">Select a Category</h2>
-    <app-category-selection
-      (categorySelected)="onCategorySelected($event)">
+    <app-category-selection (categorySelected)="onCategorySelected($event)">
     </app-category-selection>
   </div>
 
-  <div *ngIf="selectedCategory && questions.length > 0">
+  <div *ngIf="state.selectedCategory() && state.questions().length > 0">
     <div class="mb-8">
       <button
-        (click)="resetCategory()"
-        class="text-blue-600 hover:text-blue-800">
+        (click)="state.resetCategory()"
+        class="text-blue-600 hover:text-blue-800"
+      >
         ← Back to Categories
       </button>
     </div>
 
     <app-question-viewer
-      [questions]="questions"
-      (answered)="onQuestionAnswered($event)">
+      [questions]="state.questions()"
+      [currentIndex]="state.currentIndex()"
+      (answered)="onQuestionAnswered($event)"
+      (next)="state.nextQuestion()"
+      (previous)="state.previousQuestion()"
+    >
     </app-question-viewer>
 
     <app-progress-bar
-      [current]="answeredCount"
-      [total]="totalQuestions"
-      [percentage]="progressPercentage">
+      [current]="state.answeredCount()"
+      [total]="state.totalQuestions()"
+      [percentage]="state.progressPercentage()"
+    >
     </app-progress-bar>
   </div>
 </div>
