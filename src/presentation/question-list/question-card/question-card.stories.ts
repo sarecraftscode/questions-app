@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { expect, within } from '@storybook/test';
 import { Question } from 'src/domain/entities/question.entity';
 import { QuestionCardComponent } from './question-card.component';
 
@@ -27,6 +28,12 @@ export const Unanswered: Story = {
       false,
     ),
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByText('Correct Answer')).toBeInTheDocument();
+    await expect(canvas.getByText('Incorrect Answer')).toBeInTheDocument();
+  },
 };
 
 export const AnsweredIncorretly: Story = {
@@ -50,5 +57,10 @@ export const AnsweredCorrectly: Story = {
       true,
       true,
     ),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByText('✓ Answered correctly')).toBeInTheDocument();
   },
 };
