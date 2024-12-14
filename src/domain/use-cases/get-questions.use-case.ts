@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IQuestionRepository } from 'src/presentation/app.module';
 import { Question } from '../entities/question.entity';
 import { QuestionRepository } from '../repositories/question.repository';
+import { IQuestionRepository } from 'src/main';
 
 @Injectable({
   providedIn: 'root',

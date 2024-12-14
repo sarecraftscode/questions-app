@@ -4,7 +4,7 @@
         {
             "name": "Category",
             "id": "interface-Category-0fcd618cff5413683c5d08125c816cfc3301118395685f06f9324bd347aae331246c0a5f17ffc8530a63b2bec82326dc37e2e4f7787961c13c18785692f29b5c",
-            "file": "src/app/core/models/category.model.ts",
+            "file": "src/domain/models/category.model.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
@@ -47,74 +47,9 @@
             "extends": []
         },
         {
-            "name": "Question",
-            "id": "interface-Question-5a6a19822a25b3b1b9776c9656d3497ad137462e5667e7ef88cc195a473a81e202d5b5dc8018ddb70c33452340246f9fc75aea4c0a83c0e8b6bd5e72700d89e6",
-            "file": "src/app/core/entities/question.entity.ts",
-            "deprecated": false,
-            "deprecationMessage": "",
-            "type": "interface",
-            "sourceCode": "export interface Question {\n  id: number;\n  text: string;\n  category: string;\n  isAnswered: boolean;\n  isCorrect?: boolean;\n}\n\nexport class QuestionImpl implements Question {\n  constructor(\n    public id: number,\n    public text: string,\n    public category: string,\n    public isAnswered: boolean = false,\n    isCorrect?: boolean\n  ) {}\n}\n",
-            "properties": [
-                {
-                    "name": "category",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 4
-                },
-                {
-                    "name": "id",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 2
-                },
-                {
-                    "name": "isAnswered",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "boolean",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 5
-                },
-                {
-                    "name": "isCorrect",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "boolean",
-                    "indexKey": "",
-                    "optional": true,
-                    "description": "",
-                    "line": 6
-                },
-                {
-                    "name": "text",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 3
-                }
-            ],
-            "indexSignatures": [],
-            "kind": 171,
-            "methods": [],
-            "extends": []
-        },
-        {
             "name": "QuestionRepository",
             "id": "interface-QuestionRepository-c486d5a8a4ac4df80ab655b30544238f379289133e2ed1e56cea2dd0e314b6884772abe0bcae035b59f10975b2c88e381ed94f37da13cc6fdd09d1363e3abc24",
-            "file": "src/app/core/repositories/question.repository.ts",
+            "file": "src/domain/repositories/question.repository.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
@@ -246,8 +181,8 @@
     "injectables": [
         {
             "name": "GetQuestionsByCategoryUseCase",
-            "id": "injectable-GetQuestionsByCategoryUseCase-f24e156874ef8fe5401dd570ccd4fc9a7be45b9576bcd8c9b6a3acf6b8d198158f77ebf180998d56c681e4a965da1b9aa8c2b573b6afec9f0d3c297b7d6a146a",
-            "file": "src/app/core/use-cases/get-questions-by-category.use-case.ts",
+            "id": "injectable-GetQuestionsByCategoryUseCase-653319982798ebac6b602881f665cd175c313d5d2a0874d59df1d50fa8f995ee796c591cfd4330843d033f63f294ac5edcca7766bb0d1c5c88bbe88dcfc22ea1",
+            "file": "src/domain/use-cases/get-questions-by-category.use-case.ts",
             "properties": [],
             "methods": [
                 {
@@ -263,7 +198,7 @@
                     "optional": false,
                     "returnType": "Observable<Question[]>",
                     "typeParameters": [],
-                    "line": 13,
+                    "line": 15,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -283,7 +218,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Inject, Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { QuestionRepository } from '../repositories/question.repository';\nimport { Question } from '../entities/question.entity';\nimport { IQuestionRepository } from 'src/app/app.module';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class GetQuestionsByCategoryUseCase {\n  constructor(@Inject(IQuestionRepository) private questionRepository: QuestionRepository) {}\n\n  execute(category: string): Observable<Question[]> {\n    return this.questionRepository.getQuestionsByCategory(category);\n  }\n}\n",
+            "sourceCode": "import { Inject, Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { IQuestionRepository } from 'src/main';\nimport { Question } from '../entities/question.entity';\nimport { QuestionRepository } from '../repositories/question.repository';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class GetQuestionsByCategoryUseCase {\n  constructor(\n    @Inject(IQuestionRepository) private questionRepository: QuestionRepository,\n  ) {}\n\n  execute(category: string): Observable<Question[]> {\n    return this.questionRepository.getQuestionsByCategory(category);\n  }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -315,8 +250,8 @@
         },
         {
             "name": "GetQuestionsUseCase",
-            "id": "injectable-GetQuestionsUseCase-85c4de0ce4c6949a874ceddc063767dea80ce26c02bd63ab729cdc8136e567ce4b541a60003d24fd16aa68482bdd5e7d641feb07bf6dbde21e617190e898d1ea",
-            "file": "src/app/core/use-cases/get-questions.use-case.ts",
+            "id": "injectable-GetQuestionsUseCase-613a840b7cf34d59a483d44a5d683b51212225f0abf4a2f4a22f836117bb3741dcb8273d47286552c54002a61c94794df569cc37e4b30548712c2bdafbe32abe",
+            "file": "src/domain/use-cases/get-questions.use-case.ts",
             "properties": [],
             "methods": [
                 {
@@ -325,7 +260,7 @@
                     "optional": false,
                     "returnType": "Observable<Question[]>",
                     "typeParameters": [],
-                    "line": 14,
+                    "line": 15,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -334,7 +269,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Inject, Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { QuestionRepository } from '../repositories/question.repository';\nimport { Question } from '../entities/question.entity';\nimport { IQuestionRepository } from 'src/app/app.module';\n\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class GetQuestionsUseCase {\n  constructor(@Inject(IQuestionRepository) private questionRepository: QuestionRepository) {}\n\n  execute(): Observable<Question[]> {\n    return this.questionRepository.getQuestions();\n  }\n}\n",
+            "sourceCode": "import { Inject, Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { Question } from '../entities/question.entity';\nimport { QuestionRepository } from '../repositories/question.repository';\nimport { IQuestionRepository } from 'src/main';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class GetQuestionsUseCase {\n  constructor(\n    @Inject(IQuestionRepository) private questionRepository: QuestionRepository,\n  ) {}\n\n  execute(): Observable<Question[]> {\n    return this.questionRepository.getQuestions();\n  }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -348,7 +283,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 11,
+                "line": 10,
                 "jsdoctags": [
                     {
                         "name": "questionRepository",
@@ -366,8 +301,8 @@
         },
         {
             "name": "MarkQuestionAnsweredUseCase",
-            "id": "injectable-MarkQuestionAnsweredUseCase-402e0e7415d990ce6461901b40bb9c7f131c9bb54a7dcbb565fbe7cb374494170e4d3a8003c2cd84b68ff5367c52e87f4e2314cc2c4fbf79ae26e51445e74b27",
-            "file": "src/app/core/use-cases/mark-questions-answered.use-case.ts",
+            "id": "injectable-MarkQuestionAnsweredUseCase-b5387a8acf8c233a24effd9ceafd547ffa093a9c1889572bc89457c7fc6364a2a6e03d7a2bb948dd73433f76fb80c9b1a797fe35cb0ce35979769d80ad1e3314",
+            "file": "src/domain/use-cases/mark-questions-answered.use-case.ts",
             "properties": [],
             "methods": [
                 {
@@ -418,7 +353,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Inject, Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { QuestionRepository } from '../repositories/question.repository';\nimport { IQuestionRepository } from 'src/app/app.module';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class MarkQuestionAnsweredUseCase {\n  constructor(@Inject(IQuestionRepository) private questionRepository: QuestionRepository) {}\n\n  execute(id: number, isCorrect: boolean): Observable<void> {\n    return this.questionRepository.markAsAnswered(id, isCorrect);\n  }\n}\n",
+            "sourceCode": "import { Inject, Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { QuestionRepository } from '../repositories/question.repository';\nimport { IQuestionRepository } from 'src/main';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class MarkQuestionAnsweredUseCase {\n  constructor(@Inject(IQuestionRepository) private questionRepository: QuestionRepository) {}\n\n  execute(id: number, isCorrect: boolean): Observable<void> {\n    return this.questionRepository.markAsAnswered(id, isCorrect);\n  }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -449,9 +384,9 @@
             "type": "injectable"
         },
         {
-            "name": "QuestionRepositoryImpl",
-            "id": "injectable-QuestionRepositoryImpl-04b021710030fab6d9f13af7677bf4676cd160a726c7e2dc0ec4f7a3175eaf8b69ca9fa75863c6f2f048ff66455582ae8b505fffd530f393f8f1d1f65f9884cc",
-            "file": "src/app/infrastructure/repositories/question.repository.impl.ts",
+            "name": "QuestionRepositoryInMemory",
+            "id": "injectable-QuestionRepositoryInMemory-003c354e572548e029685e574d99885cfdcdce72c24289bc1ad80efca8b0e94c80ea88198cafef5814a90d28df6e162499f5f4ee32e19d4bba19687aa86edd45",
+            "file": "src/infrastructure/repositories/question.repository.in.memory.ts",
             "properties": [
                 {
                     "name": "questions",
@@ -555,7 +490,305 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport { Observable, of } from 'rxjs';\nimport { Question } from 'src/app/core/entities/question.entity';\nimport { generateQuestions } from './questions-data';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class QuestionRepositoryImpl implements QuestionRepositoryImpl {\n  private questions: Question[] = generateQuestions();\n\n  getQuestionsByCategory(category: string): Observable<Question[]> {\n    return of(this.questions.filter(q => q.category === category));\n  }\n\n  markAsAnswered(id: number, isCorrect: boolean): Observable<void> {\n    const question = this.questions.find(q => q.id === id);\n    if (question) {\n      question.isAnswered = true;\n      question.isCorrect = isCorrect;\n    }\n    return of(void 0);\n  }\n\n  getCategories(): Observable<string[]> {\n    return of([...new Set(this.questions.map(q => q.category))]);\n  }\n}\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { Observable, of } from 'rxjs';\nimport { generateQuestions } from './questions-data';\nimport { Question } from '../../domain/entities/question.entity';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class QuestionRepositoryInMemory implements QuestionRepositoryInMemory {\n  private questions: Question[] = generateQuestions();\n\n  getQuestionsByCategory(category: string): Observable<Question[]> {\n    return of(this.questions.filter(q => q.category === category));\n  }\n\n  markAsAnswered(id: number, isCorrect: boolean): Observable<void> {\n    const question = this.questions.find(q => q.id === id);\n    if (question) {\n      question.isAnswered = true;\n      question.isCorrect = isCorrect;\n    }\n    return of(void 0);\n  }\n\n  getCategories(): Observable<string[]> {\n    return of([...new Set(this.questions.map(q => q.category))]);\n  }\n}\n",
+            "extends": [],
+            "type": "injectable"
+        },
+        {
+            "name": "QuestionState",
+            "id": "injectable-QuestionState-b4d909610c7243bb5cd0931f78ce48f79f9f004d296c693b24351dc39a2c777422a9d00982290ae6bdacbd965a5bf2a2dc77546c32291d505ad2ed9fbf441232",
+            "file": "src/presentation/state/question.state.ts",
+            "properties": [
+                {
+                    "name": "answeredCount",
+                    "defaultValue": "computed(\n    () => this.questions().filter((q) => q.isAnswered).length,\n  )",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 24
+                },
+                {
+                    "name": "currentIndex",
+                    "defaultValue": "computed(() => this.currentIndexSignal())",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 16
+                },
+                {
+                    "name": "currentIndexSignal",
+                    "defaultValue": "signal<number>(0)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "currentQuestion",
+                    "defaultValue": "computed(() => {\n    const questions = this.questions();\n    const index = this.currentIndex();\n    return questions[index];\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 18
+                },
+                {
+                    "name": "progressPercentage",
+                    "defaultValue": "computed(\n    () => (this.answeredCount() / this.totalQuestions()) * 100,\n  )",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 30
+                },
+                {
+                    "name": "questions",
+                    "defaultValue": "computed(() => this.questionsSignal())",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 14
+                },
+                {
+                    "name": "questionsSignal",
+                    "defaultValue": "signal<Question[]>([])",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 10,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "selectedCategory",
+                    "defaultValue": "computed(() => this.selectedCategorySignal())",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
+                },
+                {
+                    "name": "selectedCategorySignal",
+                    "defaultValue": "signal<string | null>(null)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 11,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "totalQuestions",
+                    "defaultValue": "computed(() => this.questions().length)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 28
+                }
+            ],
+            "methods": [
+                {
+                    "name": "answerQuestion",
+                    "args": [
+                        {
+                            "name": "id",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "isCorrect",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Promise<void>",
+                    "typeParameters": [],
+                    "line": 52,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        134
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "id",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "isCorrect",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "loadQuestions",
+                    "args": [
+                        {
+                            "name": "categoryId",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "questionCount",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Promise<void>",
+                    "typeParameters": [],
+                    "line": 39,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        134
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "categoryId",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "questionCount",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "nextQuestion",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 67,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "previousQuestion",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 73,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "resetCategory",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 61,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { computed, Injectable, signal } from '@angular/core';\nimport { Question } from 'src/domain/entities/question.entity';\nimport { GetQuestionsByCategoryUseCase } from 'src/domain/use-cases/get-questions-by-category.use-case';\nimport { MarkQuestionAnsweredUseCase } from 'src/domain/use-cases/mark-questions-answered.use-case';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class QuestionState {\n  private questionsSignal = signal<Question[]>([]);\n  private selectedCategorySignal = signal<string | null>(null);\n  private currentIndexSignal = signal<number>(0);\n\n  questions = computed(() => this.questionsSignal());\n  selectedCategory = computed(() => this.selectedCategorySignal());\n  currentIndex = computed(() => this.currentIndexSignal());\n\n  currentQuestion = computed(() => {\n    const questions = this.questions();\n    const index = this.currentIndex();\n    return questions[index];\n  });\n\n  answeredCount = computed(\n    () => this.questions().filter((q) => q.isAnswered).length,\n  );\n\n  totalQuestions = computed(() => this.questions().length);\n\n  progressPercentage = computed(\n    () => (this.answeredCount() / this.totalQuestions()) * 100,\n  );\n\n  constructor(\n    private getQuestionsByCategoryUseCase: GetQuestionsByCategoryUseCase,\n    private markQuestionAnsweredUseCase: MarkQuestionAnsweredUseCase,\n  ) {}\n\n  async loadQuestions(\n    categoryId: string,\n    questionCount: number,\n  ): Promise<void> {\n    this.selectedCategorySignal.set(categoryId);\n    await this.getQuestionsByCategoryUseCase\n      .execute(categoryId)\n      .subscribe((questions: Question[]) => {\n        this.questionsSignal.set(questions.slice(0, questionCount));\n        this.currentIndexSignal.set(0);\n      });\n  }\n\n  async answerQuestion(id: number, isCorrect: boolean): Promise<void> {\n    await this.markQuestionAnsweredUseCase.execute(id, isCorrect);\n\n    const updatedQuestions = this.questions().map((q) =>\n      q.id === id ? { ...q, isAnswered: true, isCorrect } : q,\n    );\n    this.questionsSignal.set(updatedQuestions);\n  }\n\n  resetCategory(): void {\n    this.selectedCategorySignal.set(null);\n    this.questionsSignal.set([]);\n    this.currentIndexSignal.set(0);\n  }\n\n  nextQuestion(): void {\n    if (this.currentIndex() < this.totalQuestions() - 1) {\n      this.currentIndexSignal.update((index) => index + 1);\n    }\n  }\n\n  previousQuestion(): void {\n    if (this.currentIndex() > 0) {\n      this.currentIndexSignal.update((index) => index - 1);\n    }\n  }\n}\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "getQuestionsByCategoryUseCase",
+                        "type": "GetQuestionsByCategoryUseCase",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "markQuestionAnsweredUseCase",
+                        "type": "MarkQuestionAnsweredUseCase",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 32,
+                "jsdoctags": [
+                    {
+                        "name": "getQuestionsByCategoryUseCase",
+                        "type": "GetQuestionsByCategoryUseCase",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "markQuestionAnsweredUseCase",
+                        "type": "MarkQuestionAnsweredUseCase",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
             "extends": [],
             "type": "injectable"
         }
@@ -564,13 +797,13 @@
     "interceptors": [],
     "classes": [
         {
-            "name": "QuestionImpl",
-            "id": "class-QuestionImpl-5a6a19822a25b3b1b9776c9656d3497ad137462e5667e7ef88cc195a473a81e202d5b5dc8018ddb70c33452340246f9fc75aea4c0a83c0e8b6bd5e72700d89e6",
-            "file": "src/app/core/entities/question.entity.ts",
+            "name": "Question",
+            "id": "class-Question-a3abb52682d5fc1a267d3eeb1d78bf18c22e6ec6318eb40bea861e012ba23a66dad3f499945ec862fdc22b6bf2f63f7bf7a604a843f5b8a28b6f05b717f2ece3",
+            "file": "src/domain/entities/question.entity.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "class",
-            "sourceCode": "export interface Question {\n  id: number;\n  text: string;\n  category: string;\n  isAnswered: boolean;\n  isCorrect?: boolean;\n}\n\nexport class QuestionImpl implements Question {\n  constructor(\n    public id: number,\n    public text: string,\n    public category: string,\n    public isAnswered: boolean = false,\n    isCorrect?: boolean\n  ) {}\n}\n",
+            "sourceCode": "export class Question  {\n  constructor(\n    public id: number,\n    public text: string,\n    public category: string,\n    public isAnswered: boolean = false,\n    public isCorrect?: boolean\n  ) {}\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -610,7 +843,7 @@
                         "optional": true
                     }
                 ],
-                "line": 9,
+                "line": 1,
                 "jsdoctags": [
                     {
                         "name": "id",
@@ -672,7 +905,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 13,
+                    "line": 5,
                     "modifierKind": [
                         125
                     ]
@@ -685,7 +918,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 11,
+                    "line": 3,
                     "modifierKind": [
                         125
                     ]
@@ -699,7 +932,20 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 14,
+                    "line": 6,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "isCorrect",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 7,
                     "modifierKind": [
                         125
                     ]
@@ -712,7 +958,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 12,
+                    "line": 4,
                     "modifierKind": [
                         125
                     ]
@@ -722,18 +968,15 @@
             "indexSignatures": [],
             "extends": [],
             "hostBindings": [],
-            "hostListeners": [],
-            "implements": [
-                "Question"
-            ]
+            "hostListeners": []
         }
     ],
     "directives": [],
     "components": [
         {
             "name": "AppComponent",
-            "id": "component-AppComponent-fe9f45aec8ca733a9193e159a6dcd3725560c5a97bca410734612fd860995b1b19d7edae500f9091d90b5cca0c3162567600156da476a707511114bbf21a8fd8",
-            "file": "src/app/app.component.ts",
+            "id": "component-AppComponent-3cc932d8817a8fc73b3c3212f838d7773cff795154b151b9f77aa9a5f7afacad69b201555233398ee7d4dfc7ab9de6b1b10f2eaf556795b9e0fbfbecfb5fef3f",
+            "file": "src/presentation/app.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -751,30 +994,26 @@
             "hostDirectives": [],
             "inputsClass": [],
             "outputsClass": [],
-            "propertiesClass": [
-                {
-                    "name": "title",
-                    "defaultValue": "'questions-app'",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 9
-                }
-            ],
+            "propertiesClass": [],
             "methodsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": false,
-            "imports": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "NavigationComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "RouterOutlet"
+                }
+            ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.css']\n})\nexport class AppComponent {\n  title = 'questions-app';\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { RouterOutlet } from '@angular/router';\nimport { NavigationComponent } from './navigation/navigation.component';\n\n@Component({\n    selector: 'app-root',\n    templateUrl: './app.component.html',\n    styleUrls: ['./app.component.css'],\n    standalone: true,\n    imports: [NavigationComponent, RouterOutlet]\n})\nexport class AppComponent {\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -922,8 +1161,8 @@
         },
         {
             "name": "CategorySelectionComponent",
-            "id": "component-CategorySelectionComponent-d5b0530fc04fbb5d4e9529945914bb18c289c0f1735232f5ff5123791ceef9a1c69ec9d5e00a1eb7a12338bfcf341d94bc812a5be504d39138934292c5da5688",
-            "file": "src/app/category-selection/category-selection.component.ts",
+            "id": "component-CategorySelectionComponent-990ff35a459640b1f2c7b406a1803ab7a6c49f0a4c4ae69dc7d56112c70e4fa64a9d5249ee4235695674eaae96ffaa69c43e9783cb434c157f12370212391bcc",
+            "file": "src/presentation/category-selection/category-selection.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -932,8 +1171,9 @@
             "selector": "app-category-selection",
             "styleUrls": [],
             "styles": [],
-            "template": "<div class=\"space-y-8\">\n  <div class=\"mb-8\">\n    <h3 class=\"text-lg font-semibold mb-4\">Choose number of questions you want for today ?</h3>\n    <div class=\"grid grid-cols-1 sm:grid-cols-3 gap-4\">\n      <button *ngFor=\"let option of questionCountOptions\"\n              (click)=\"selectQuestionCount(option.value)\"\n              [class]=\"getQuestionCountButtonClass(option.value)\">\n        {{ option.label }}\n      </button>\n    </div>\n  </div>\n\n  <div class=\"grid grid-cols-1 md:grid-cols-3 gap-4\">\n    <div *ngFor=\"let category of categories\"\n         (click)=\"onCategorySelect(category)\"\n         [class]=\"getCategoryCardClass()\">\n      <h3 class=\"text-xl font-semibold mb-2\">{{ category.name }}</h3>\n      <p class=\"text-gray-600\">{{ category.description }}</p>\n      <div class=\"mt-4 text-sm text-gray-500\" *ngIf=\"selectedQuestionCount\">\n        Selected: {{ selectedQuestionCount }} questions\n      </div>\n    </div>\n  </div>\n</div>\n",
-            "templateUrl": [],
+            "templateUrl": [
+                "./category-selection.component.html"
+            ],
             "viewProviders": [],
             "hostDirectives": [],
             "inputsClass": [],
@@ -943,7 +1183,7 @@
                     "defaultValue": "new EventEmitter<{categoryId: string, questionCount: number}>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 40,
+                    "line": 17,
                     "type": "EventEmitter"
                 }
             ],
@@ -957,7 +1197,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 36
+                    "line": 13
                 },
                 {
                     "name": "questionCountOptions",
@@ -968,7 +1208,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 37
+                    "line": 14
                 },
                 {
                     "name": "selectedQuestionCount",
@@ -979,7 +1219,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 38
+                    "line": 15
                 }
             ],
             "methodsClass": [
@@ -989,7 +1229,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 62,
+                    "line": 39,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1006,7 +1246,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 55,
+                    "line": 32,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1034,7 +1274,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 46,
+                    "line": 23,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1062,7 +1302,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 42,
+                    "line": 19,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1082,16 +1322,24 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": false,
-            "imports": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "NgFor"
+                },
+                {
+                    "name": "NgIf"
+                }
+            ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { FormsModule } from '@angular/forms';\nimport { CATEGORIES, QUESTION_COUNT_OPTIONS, Category } from '../core/models/category.model';\n\n@Component({\n  selector: 'app-category-selection',\n  template: `\n    <div class=\"space-y-8\">\n      <div class=\"mb-8\">\n        <h3 class=\"text-lg font-semibold mb-4\">Choose number of questions you want for today ?</h3>\n        <div class=\"grid grid-cols-1 sm:grid-cols-3 gap-4\">\n          <button *ngFor=\"let option of questionCountOptions\"\n                  (click)=\"selectQuestionCount(option.value)\"\n                  [class]=\"getQuestionCountButtonClass(option.value)\">\n            {{ option.label }}\n          </button>\n        </div>\n      </div>\n\n      <div class=\"grid grid-cols-1 md:grid-cols-3 gap-4\">\n        <div *ngFor=\"let category of categories\"\n             (click)=\"onCategorySelect(category)\"\n             [class]=\"getCategoryCardClass()\">\n          <h3 class=\"text-xl font-semibold mb-2\">{{ category.name }}</h3>\n          <p class=\"text-gray-600\">{{ category.description }}</p>\n          <div class=\"mt-4 text-sm text-gray-500\" *ngIf=\"selectedQuestionCount\">\n            Selected: {{ selectedQuestionCount }} questions\n          </div>\n        </div>\n      </div>\n    </div>\n  `\n})\nexport class CategorySelectionComponent {\n  categories = CATEGORIES;\n  questionCountOptions = QUESTION_COUNT_OPTIONS;\n  selectedQuestionCount: number | null = null;\n\n  @Output() categorySelected = new EventEmitter<{categoryId: string, questionCount: number}>();\n\n  selectQuestionCount(count: number) {\n    this.selectedQuestionCount = count;\n  }\n\n  onCategorySelect(category: Category) {\n    if (this.selectedQuestionCount) {\n      this.categorySelected.emit({\n        categoryId: category.id,\n        questionCount: this.selectedQuestionCount\n      });\n    }\n  }\n\n  getQuestionCountButtonClass(count: number): string {\n    const baseClass = 'px-4 py-2 rounded-lg transition-colors text-center';\n    return count === this.selectedQuestionCount\n      ? `${baseClass} bg-blue-600 text-white`\n      : `${baseClass} bg-gray-100 hover:bg-gray-200 text-gray-800`;\n  }\n\n  getCategoryCardClass(): string {\n    const baseClass = 'p-6 bg-white rounded-lg shadow-md transition-all';\n    return this.selectedQuestionCount\n      ? `${baseClass} hover:shadow-lg cursor-pointer`\n      : `${baseClass} opacity-50 cursor-not-allowed`;\n  }\n}\n",
+            "sourceCode": "import { Component, Output, EventEmitter } from '@angular/core';\nimport { CommonModule, NgFor, NgIf } from '@angular/common';\nimport { FormsModule } from '@angular/forms';\nimport { CATEGORIES, QUESTION_COUNT_OPTIONS, Category } from '../../domain/models/category.model';\n\n@Component({\n    selector: 'app-category-selection',\n    templateUrl: './category-selection.component.html',\n    standalone: true,\n    imports: [NgFor, NgIf],\n})\nexport class CategorySelectionComponent {\n  categories = CATEGORIES;\n  questionCountOptions = QUESTION_COUNT_OPTIONS;\n  selectedQuestionCount: number | null = null;\n\n  @Output() categorySelected = new EventEmitter<{categoryId: string, questionCount: number}>();\n\n  selectQuestionCount(count: number) {\n    this.selectedQuestionCount = count;\n  }\n\n  onCategorySelect(category: Category) {\n    if (this.selectedQuestionCount) {\n      this.categorySelected.emit({\n        categoryId: category.id,\n        questionCount: this.selectedQuestionCount\n      });\n    }\n  }\n\n  getQuestionCountButtonClass(count: number): string {\n    const baseClass = 'px-4 py-2 rounded-lg transition-colors text-center';\n    return count === this.selectedQuestionCount\n      ? `${baseClass} bg-blue-600 text-white`\n      : `${baseClass} bg-gray-100 hover:bg-gray-200 text-gray-800`;\n  }\n\n  getCategoryCardClass(): string {\n    const baseClass = 'p-6 bg-white rounded-lg shadow-md transition-all';\n    return this.selectedQuestionCount\n      ? `${baseClass} hover:shadow-lg cursor-pointer`\n      : `${baseClass} opacity-50 cursor-not-allowed`;\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
-            "extends": []
+            "extends": [],
+            "templateData": "<div class=\"space-y-8\">\n  <div class=\"mb-8\">\n    <h3 class=\"text-lg font-semibold mb-4\">Choose number of questions you want for today ?</h3>\n    <div class=\"grid grid-cols-1 sm:grid-cols-3 gap-4\">\n      <button *ngFor=\"let option of questionCountOptions\"\n              (click)=\"selectQuestionCount(option.value)\"\n              [class]=\"getQuestionCountButtonClass(option.value)\">\n        {{ option.label }}\n      </button>\n    </div>\n  </div>\n\n  <div class=\"grid grid-cols-1 md:grid-cols-3 gap-4\">\n    <div *ngFor=\"let category of categories\"\n         (click)=\"onCategorySelect(category)\"\n         [class]=\"getCategoryCardClass()\">\n      <h3 class=\"text-xl font-semibold mb-2\">{{ category.name }}</h3>\n      <p class=\"text-gray-600\">{{ category.description }}</p>\n      <div class=\"mt-4 text-sm text-gray-500\" *ngIf=\"selectedQuestionCount\">\n        Selected: {{ selectedQuestionCount }} questions\n      </div>\n    </div>\n  </div>\n</div>\n"
         },
         {
             "name": "HeaderComponent",
@@ -1181,8 +1429,8 @@
         },
         {
             "name": "LandingPageComponent",
-            "id": "component-LandingPageComponent-45c6efb2e072ec8211f901da0a3e34e7ceb1a1849619a9ad0c3dc80a71f59fe467263993b8958aa662f3f8db48915678ffa5443544759240f14a47b535ee5aff",
-            "file": "src/app/landing-page/landing-page.component.ts",
+            "id": "component-LandingPageComponent-903ee2f5264dbb4f8fdd1b68a0753708baddf3a9234e0dbc67e2f67a74373a492de18de2b6d497cc039a2769f481c0f73207ebef17c4d37810c9a1de75da6af5",
+            "file": "src/presentation/landing-page/landing-page.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -1191,8 +1439,9 @@
             "selector": "app-landing-page",
             "styleUrls": [],
             "styles": [],
-            "template": "<div class=\"bg-gradient-to-b from-blue-50 to-white\">\n  <div class=\"container mx-auto px-4 py-16\">\n    <div class=\"text-center max-w-3xl mx-auto\">\n      <h1 class=\"text-4xl md:text-5xl font-bold text-gray-900 mb-6\">\n        Master Your Technical Interviews\n      </h1>\n      <p class=\"text-xl text-gray-600 mb-8\">\n        Practice with 500+ real-world technical interview questions across software craftsmanship,\n        backend development, and frontend development.\n      </p>\n      <a routerLink=\"/questions\"\n         class=\"inline-block bg-blue-600 text-white px-8 py-3 rounded-lg\n                hover:bg-blue-700 transition-colors\">\n        Start Practicing\n      </a>\n    </div>\n\n    <div class=\"mt-16 grid grid-cols-1 md:grid-cols-3 gap-8\">\n      <div class=\"bg-white p-6 rounded-lg shadow-md\">\n        <h3 class=\"text-xl font-semibold mb-4\">Software Craftsmanship</h3>\n        <p class=\"text-gray-600\">Master clean code, TDD, and software design principles.</p>\n      </div>\n      <div class=\"bg-white p-6 rounded-lg shadow-md\">\n        <h3 class=\"text-xl font-semibold mb-4\">Backend Development</h3>\n        <p class=\"text-gray-600\">Deep dive into architecture, databases, and system design.</p>\n      </div>\n      <div class=\"bg-white p-6 rounded-lg shadow-md\">\n        <h3 class=\"text-xl font-semibold mb-4\">Frontend Development</h3>\n        <p class=\"text-gray-600\">Learn modern frameworks, patterns, and best practices.</p>\n      </div>\n    </div>\n  </div>\n</div>\n",
-            "templateUrl": [],
+            "templateUrl": [
+                "./landing-page.component.html"
+            ],
             "viewProviders": [],
             "hostDirectives": [],
             "inputsClass": [],
@@ -1203,51 +1452,124 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": false,
-            "imports": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "RouterLink"
+                }
+            ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { RouterModule } from '@angular/router';\n\n@Component({\n  selector: 'app-landing-page',\n  template: `\n    <div class=\"bg-gradient-to-b from-blue-50 to-white\">\n      <div class=\"container mx-auto px-4 py-16\">\n        <div class=\"text-center max-w-3xl mx-auto\">\n          <h1 class=\"text-4xl md:text-5xl font-bold text-gray-900 mb-6\">\n            Master Your Technical Interviews\n          </h1>\n          <p class=\"text-xl text-gray-600 mb-8\">\n            Practice with 500+ real-world technical interview questions across software craftsmanship,\n            backend development, and frontend development.\n          </p>\n          <a routerLink=\"/questions\"\n             class=\"inline-block bg-blue-600 text-white px-8 py-3 rounded-lg\n                    hover:bg-blue-700 transition-colors\">\n            Start Practicing\n          </a>\n        </div>\n\n        <div class=\"mt-16 grid grid-cols-1 md:grid-cols-3 gap-8\">\n          <div class=\"bg-white p-6 rounded-lg shadow-md\">\n            <h3 class=\"text-xl font-semibold mb-4\">Software Craftsmanship</h3>\n            <p class=\"text-gray-600\">Master clean code, TDD, and software design principles.</p>\n          </div>\n          <div class=\"bg-white p-6 rounded-lg shadow-md\">\n            <h3 class=\"text-xl font-semibold mb-4\">Backend Development</h3>\n            <p class=\"text-gray-600\">Deep dive into architecture, databases, and system design.</p>\n          </div>\n          <div class=\"bg-white p-6 rounded-lg shadow-md\">\n            <h3 class=\"text-xl font-semibold mb-4\">Frontend Development</h3>\n            <p class=\"text-gray-600\">Learn modern frameworks, patterns, and best practices.</p>\n          </div>\n        </div>\n      </div>\n    </div>\n  `\n})\nexport class LandingPageComponent {}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { RouterModule, RouterLink } from '@angular/router';\n\n@Component({\n    selector: 'app-landing-page',\n    templateUrl: './landing-page.component.html',\n    standalone: true,\n    imports: [RouterLink],\n})\nexport class LandingPageComponent {}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
-            "extends": []
+            "extends": [],
+            "templateData": "<div class=\"bg-gradient-to-b from-blue-50 to-white\">\n  <div class=\"container mx-auto px-4 py-16\">\n    <div class=\"text-center max-w-3xl mx-auto\">\n      <h1 class=\"text-4xl md:text-5xl font-bold text-gray-900 mb-6\">\n        Exercice Your Technical Interviews\n      </h1>\n      <p class=\"text-xl text-gray-600 mb-8\">\n        Practice with 500+ real-world technical interview questions across software craftsmanship,\n        backend development, and frontend development.\n      </p>\n      <a routerLink=\"/questions\"\n         class=\"inline-block bg-blue-600 text-white px-8 py-3 rounded-lg\n                hover:bg-blue-700 transition-colors\">\n        Start Practicing\n      </a>\n    </div>\n\n    <div class=\"mt-16 grid grid-cols-1 md:grid-cols-3 gap-8\">\n      <div class=\"bg-white p-6 rounded-lg shadow-md\">\n        <h3 class=\"text-xl font-semibold mb-4\">Software Craftsmanship</h3>\n        <p class=\"text-gray-600\">Master clean code, TDD, and software design principles.</p>\n      </div>\n      <div class=\"bg-white p-6 rounded-lg shadow-md\">\n        <h3 class=\"text-xl font-semibold mb-4\">Backend Development</h3>\n        <p class=\"text-gray-600\">Deep dive into architecture, databases, and system design.</p>\n      </div>\n      <div class=\"bg-white p-6 rounded-lg shadow-md\">\n        <h3 class=\"text-xl font-semibold mb-4\">Frontend Development</h3>\n        <p class=\"text-gray-600\">Learn modern frameworks, patterns, and best practices.</p>\n      </div>\n    </div>\n  </div>\n</div>\n"
         },
         {
             "name": "NavigationComponent",
-            "id": "component-NavigationComponent-d650bfa4c34c2021c43bbe7b43f1d084c6653e510aca087ee8f481ad2ecac1482a56c2630330b4870601dbcf4954596651041b99a41eca525dd8d76c2254d6f5",
-            "file": "src/app/navigation/navigation.component.ts",
+            "id": "component-NavigationComponent-170b954ded943aaeac8ffbf63002e16bd6b0dbbee83cd970beda9bc8e5028213faf223d85cdc2f7af72d270479319c497ea63ffb09d0df73cc332c15d2e96ffe",
+            "file": "src/presentation/navigation/navigation.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
             "selector": "app-navigation",
-            "styleUrls": [],
+            "styleUrls": [
+                "./navigation.component.css"
+            ],
             "styles": [],
-            "template": "<nav class=\"bg-white shadow-lg\">\n  <div class=\"container mx-auto px-4\">\n    <div class=\"flex justify-between items-center h-16\">\n      <div class=\"flex items-center\">\n        <a routerLink=\"/\" class=\"text-xl font-bold text-gray-800\">\n          TechInterviewer\n        </a>\n      </div>\n      <div class=\"flex space-x-4\">\n        <a routerLink=\"/questions\"\n           routerLinkActive=\"text-blue-600\"\n           class=\"px-3 py-2 rounded-md text-gray-700 hover:text-gray-900\">\n          Practice\n        </a>\n        <a routerLink=\"/pricing\"\n           routerLinkActive=\"text-blue-600\"\n           class=\"px-3 py-2 rounded-md text-gray-700 hover:text-gray-900\">\n          Pricing\n        </a>\n      </div>\n    </div>\n  </div>\n</nav>\n",
-            "templateUrl": [],
+            "templateUrl": [
+                "./navigation.component.html"
+            ],
             "viewProviders": [],
             "hostDirectives": [],
             "inputsClass": [],
             "outputsClass": [],
             "propertiesClass": [],
-            "methodsClass": [],
+            "methodsClass": [
+                {
+                    "name": "goToQuestions",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 18,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": false,
-            "imports": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "RouterLink"
+                },
+                {
+                    "name": "RouterLinkActive"
+                }
+            ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { RouterModule } from '@angular/router';\n\n@Component({\n  selector: 'app-navigation',\n  template: `\n    <nav class=\"bg-white shadow-lg\">\n      <div class=\"container mx-auto px-4\">\n        <div class=\"flex justify-between items-center h-16\">\n          <div class=\"flex items-center\">\n            <a routerLink=\"/\" class=\"text-xl font-bold text-gray-800\">\n              TechInterviewer\n            </a>\n          </div>\n          <div class=\"flex space-x-4\">\n            <a routerLink=\"/questions\"\n               routerLinkActive=\"text-blue-600\"\n               class=\"px-3 py-2 rounded-md text-gray-700 hover:text-gray-900\">\n              Practice\n            </a>\n            <a routerLink=\"/pricing\"\n               routerLinkActive=\"text-blue-600\"\n               class=\"px-3 py-2 rounded-md text-gray-700 hover:text-gray-900\">\n              Pricing\n            </a>\n          </div>\n        </div>\n      </div>\n    </nav>\n  `\n})\nexport class NavigationComponent {}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { Router, RouterLink, RouterLinkActive } from '@angular/router';\nimport { QuestionState } from '../state/question.state';\n\n@Component({\n  selector: 'app-navigation',\n  templateUrl: './navigation.component.html',\n  styleUrls: ['./navigation.component.css'],\n  standalone: true,\n  imports: [RouterLink, RouterLinkActive],\n})\nexport class NavigationComponent {\n  constructor(\n    private router: Router,\n    private state: QuestionState,\n  ) {}\n\n  goToQuestions() {\n    this.state.resetCategory();\n    this.router.navigate(['/questions']);\n  }\n}\n",
             "assetsDirs": [],
-            "styleUrlsData": "",
+            "styleUrlsData": [
+                {
+                    "data": ".navigation-link {\n  @apply px-3 py-2 rounded-md text-gray-700 hover:text-gray-900;\n}\n",
+                    "styleUrl": "./navigation.component.css"
+                }
+            ],
             "stylesData": "",
-            "extends": []
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "router",
+                        "type": "Router",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "state",
+                        "type": "QuestionState",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 12,
+                "jsdoctags": [
+                    {
+                        "name": "router",
+                        "type": "Router",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "state",
+                        "type": "QuestionState",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "extends": [],
+            "templateData": "<nav class=\"bg-white shadow-lg\">\n  <div class=\"container mx-auto px-4\">\n    <div class=\"flex justify-between items-center h-16\">\n      <div class=\"flex items-center\">\n        <a routerLink=\"/\" class=\"text-xl font-bold text-gray-800\">\n          TechInterviewer\n        </a>\n      </div>\n      <div class=\"flex space-x-4\">\n        <a\n          (click)=\"goToQuestions()\"\n          routerLinkActive=\"text-blue-600\"\n          class=\"navigation-link\"\n        >\n          Practice\n        </a>\n        <a\n          routerLink=\"/pricing\"\n          routerLinkActive=\"text-blue-600\"\n          class=\"navigation-link\"\n        >\n          Pricing\n        </a>\n      </div>\n    </div>\n  </div>\n</nav>\n"
         },
         {
             "name": "PageComponent",
@@ -1345,8 +1667,8 @@
         },
         {
             "name": "PricingPageComponent",
-            "id": "component-PricingPageComponent-32a3a02921f7ead85f26ba7ce2d9b03caa03ec0d660cd86dc1a5b965d2c8f11b42bcc110bbb188b749abd0d3098974b176405b670a805331d1d33d1d3e51e52d",
-            "file": "src/app/pricing-page/pricing-page.component.ts",
+            "id": "component-PricingPageComponent-0b8660293ca42d6f9a51007018ee031f7aeb2acc681692d2a9bf7586c302c7bc4b4fafe34bb916d88267279dafd37eccb1d03b65a38963206f316245c83c6305",
+            "file": "src/presentation/pricing-page/pricing-page.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -1355,8 +1677,9 @@
             "selector": "app-pricing-page",
             "styleUrls": [],
             "styles": [],
-            "template": "<div class=\"bg-gray-50 py-16\">\n  <div class=\"container mx-auto px-4\">\n    <h2 class=\"text-3xl font-bold text-center mb-12\">Choose Your Plan</h2>\n\n    <div class=\"grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto\">\n      <div class=\"bg-white rounded-lg shadow-md p-8\">\n        <h3 class=\"text-xl font-semibold mb-4\">Basic</h3>\n        <p class=\"text-3xl font-bold mb-6\">Free</p>\n        <ul class=\"space-y-3 mb-8\">\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Access to 50 questions\n          </li>\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Basic progress tracking\n          </li>\n        </ul>\n        <a routerLink=\"/questions\"\n           class=\"block text-center bg-gray-100 text-gray-800 px-6 py-2 rounded-lg\n                  hover:bg-gray-200 transition-colors\">\n          Start Free\n        </a>\n      </div>\n\n      <div class=\"bg-white rounded-lg shadow-md p-8 border-2 border-blue-500\">\n        <h3 class=\"text-xl font-semibold mb-4\">Pro</h3>\n        <p class=\"text-3xl font-bold mb-6\">$19/mo</p>\n        <ul class=\"space-y-3 mb-8\">\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Access to all 500+ questions\n          </li>\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Detailed progress analytics\n          </li>\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Custom study paths\n          </li>\n        </ul>\n        <button\n          class=\"w-full bg-blue-600 text-white px-6 py-2 rounded-lg\n                 hover:bg-blue-700 transition-colors\">\n          Get Pro\n        </button>\n      </div>\n\n      <div class=\"bg-white rounded-lg shadow-md p-8\">\n        <h3 class=\"text-xl font-semibold mb-4\">Team</h3>\n        <p class=\"text-3xl font-bold mb-6\">$49/mo</p>\n        <ul class=\"space-y-3 mb-8\">\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Everything in Pro\n          </li>\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Team progress tracking\n          </li>\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Custom question sets\n          </li>\n        </ul>\n        <button\n          class=\"w-full bg-gray-100 text-gray-800 px-6 py-2 rounded-lg\n                 hover:bg-gray-200 transition-colors\">\n          Contact Sales\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n",
-            "templateUrl": [],
+            "templateUrl": [
+                "./pricing-page.component.html"
+            ],
             "viewProviders": [],
             "hostDirectives": [],
             "inputsClass": [],
@@ -1367,21 +1690,26 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": false,
-            "imports": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "RouterLink"
+                }
+            ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { RouterModule } from '@angular/router';\n\n@Component({\n  selector: 'app-pricing-page',\n  template: `\n    <div class=\"bg-gray-50 py-16\">\n      <div class=\"container mx-auto px-4\">\n        <h2 class=\"text-3xl font-bold text-center mb-12\">Choose Your Plan</h2>\n\n        <div class=\"grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto\">\n          <div class=\"bg-white rounded-lg shadow-md p-8\">\n            <h3 class=\"text-xl font-semibold mb-4\">Basic</h3>\n            <p class=\"text-3xl font-bold mb-6\">Free</p>\n            <ul class=\"space-y-3 mb-8\">\n              <li class=\"flex items-center\">\n                <span class=\"text-green-500 mr-2\">✓</span>\n                Access to 50 questions\n              </li>\n              <li class=\"flex items-center\">\n                <span class=\"text-green-500 mr-2\">✓</span>\n                Basic progress tracking\n              </li>\n            </ul>\n            <a routerLink=\"/questions\"\n               class=\"block text-center bg-gray-100 text-gray-800 px-6 py-2 rounded-lg\n                      hover:bg-gray-200 transition-colors\">\n              Start Free\n            </a>\n          </div>\n\n          <div class=\"bg-white rounded-lg shadow-md p-8 border-2 border-blue-500\">\n            <h3 class=\"text-xl font-semibold mb-4\">Pro</h3>\n            <p class=\"text-3xl font-bold mb-6\">$19/mo</p>\n            <ul class=\"space-y-3 mb-8\">\n              <li class=\"flex items-center\">\n                <span class=\"text-green-500 mr-2\">✓</span>\n                Access to all 500+ questions\n              </li>\n              <li class=\"flex items-center\">\n                <span class=\"text-green-500 mr-2\">✓</span>\n                Detailed progress analytics\n              </li>\n              <li class=\"flex items-center\">\n                <span class=\"text-green-500 mr-2\">✓</span>\n                Custom study paths\n              </li>\n            </ul>\n            <button\n              class=\"w-full bg-blue-600 text-white px-6 py-2 rounded-lg\n                     hover:bg-blue-700 transition-colors\">\n              Get Pro\n            </button>\n          </div>\n\n          <div class=\"bg-white rounded-lg shadow-md p-8\">\n            <h3 class=\"text-xl font-semibold mb-4\">Team</h3>\n            <p class=\"text-3xl font-bold mb-6\">$49/mo</p>\n            <ul class=\"space-y-3 mb-8\">\n              <li class=\"flex items-center\">\n                <span class=\"text-green-500 mr-2\">✓</span>\n                Everything in Pro\n              </li>\n              <li class=\"flex items-center\">\n                <span class=\"text-green-500 mr-2\">✓</span>\n                Team progress tracking\n              </li>\n              <li class=\"flex items-center\">\n                <span class=\"text-green-500 mr-2\">✓</span>\n                Custom question sets\n              </li>\n            </ul>\n            <button\n              class=\"w-full bg-gray-100 text-gray-800 px-6 py-2 rounded-lg\n                     hover:bg-gray-200 transition-colors\">\n              Contact Sales\n            </button>\n          </div>\n        </div>\n      </div>\n    </div>\n  `\n})\nexport class PricingPageComponent {}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { RouterModule, RouterLink } from '@angular/router';\n\n@Component({\n    selector: 'app-pricing-page',\n    templateUrl: './pricing-page.component.html',\n    standalone: true,\n    imports: [RouterLink]\n})\nexport class PricingPageComponent {}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
-            "extends": []
+            "extends": [],
+            "templateData": "<div class=\"bg-gray-50 py-16\">\n  <div class=\"container mx-auto px-4\">\n    <h2 class=\"text-3xl font-bold text-center mb-12\">Choose Your Plan</h2>\n\n    <div class=\"grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto\">\n      <div class=\"bg-white rounded-lg shadow-md p-8\">\n        <h3 class=\"text-xl font-semibold mb-4\">Basic</h3>\n        <p class=\"text-3xl font-bold mb-6\">Free</p>\n        <ul class=\"space-y-3 mb-8\">\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Access to 50 questions\n          </li>\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Basic progress tracking\n          </li>\n        </ul>\n        <a routerLink=\"/questions\"\n           class=\"block text-center bg-gray-100 text-gray-800 px-6 py-2 rounded-lg\n                  hover:bg-gray-200 transition-colors\">\n          Start Free\n        </a>\n      </div>\n\n      <div class=\"bg-white rounded-lg shadow-md p-8 border-2 border-blue-500\">\n        <h3 class=\"text-xl font-semibold mb-4\">Pro</h3>\n        <p class=\"text-3xl font-bold mb-6\">$19/mo</p>\n        <ul class=\"space-y-3 mb-8\">\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Access to all 500+ questions\n          </li>\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Detailed progress analytics\n          </li>\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Custom study paths\n          </li>\n        </ul>\n        <button\n          class=\"w-full bg-blue-600 text-white px-6 py-2 rounded-lg\n                 hover:bg-blue-700 transition-colors\">\n          Get Pro\n        </button>\n      </div>\n\n      <div class=\"bg-white rounded-lg shadow-md p-8\">\n        <h3 class=\"text-xl font-semibold mb-4\">Team</h3>\n        <p class=\"text-3xl font-bold mb-6\">$49/mo</p>\n        <ul class=\"space-y-3 mb-8\">\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Everything in Pro\n          </li>\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Team progress tracking\n          </li>\n          <li class=\"flex items-center\">\n            <span class=\"text-green-500 mr-2\">✓</span>\n            Custom question sets\n          </li>\n        </ul>\n        <button\n          class=\"w-full bg-gray-100 text-gray-800 px-6 py-2 rounded-lg\n                 hover:bg-gray-200 transition-colors\">\n          Contact Sales\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n"
         },
         {
             "name": "ProgressBarComponent",
-            "id": "component-ProgressBarComponent-840c8bb83772bfd8e8fd7e13d89051b6c7761b995701540537076710673a273d62f2b3d192c1123bafad4d938226454c622ebd44683a2e1e6de8500052fae9af",
-            "file": "src/app/question-list/progress-bar/progress-bar.component.ts",
+            "id": "component-ProgressBarComponent-220b5e78bbf05ad158af76749ba8fcfce06e679708d42301198e51da49c3f24664c1d2db6d81f97dad0536788d3848a72ea684fba0fe09e81eb02e7f7501a633",
+            "file": "src/presentation/question-list/progress-bar/progress-bar.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -1390,8 +1718,9 @@
             "selector": "app-progress-bar",
             "styleUrls": [],
             "styles": [],
-            "template": "<div class=\"mt-6\">\n  <div class=\"bg-gray-200 rounded-full h-2.5\">\n    <div class=\"bg-blue-600 h-2.5 rounded-full\"\n         [style.width]=\"percentage + '%'\">\n    </div>\n  </div>\n  <p class=\"text-center mt-2\">\n    Progress: {{ current }}/{{ total }} questions\n  </p>\n</div>\n",
-            "templateUrl": [],
+            "templateUrl": [
+                "./progress-bar.component.html"
+            ],
             "viewProviders": [],
             "hostDirectives": [],
             "inputsClass": [
@@ -1400,7 +1729,7 @@
                     "defaultValue": "0",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 20,
+                    "line": 10,
                     "type": "number",
                     "decorators": []
                 },
@@ -1409,7 +1738,7 @@
                     "defaultValue": "0",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 22,
+                    "line": 12,
                     "type": "number",
                     "decorators": []
                 },
@@ -1418,7 +1747,7 @@
                     "defaultValue": "0",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 21,
+                    "line": 11,
                     "type": "number",
                     "decorators": []
                 }
@@ -1430,21 +1759,22 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": false,
+            "standalone": true,
             "imports": [],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\n@Component({\n  selector: 'app-progress-bar',\n  template: `\n    <div class=\"mt-6\">\n      <div class=\"bg-gray-200 rounded-full h-2.5\">\n        <div class=\"bg-blue-600 h-2.5 rounded-full\"\n             [style.width]=\"percentage + '%'\">\n        </div>\n      </div>\n      <p class=\"text-center mt-2\">\n        Progress: {{ current }}/{{ total }} questions\n      </p>\n    </div>\n  `\n})\nexport class ProgressBarComponent {\n  @Input() current: number = 0;\n  @Input() total: number = 0;\n  @Input() percentage: number = 0;\n}\n",
+            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\n@Component({\n    selector: 'app-progress-bar',\n    templateUrl: './progress-bar.component.html',\n    standalone: true,\n})\nexport class ProgressBarComponent {\n  @Input() current: number = 0;\n  @Input() total: number = 0;\n  @Input() percentage: number = 0;\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
-            "extends": []
+            "extends": [],
+            "templateData": "<div class=\"mt-6\">\n  <div class=\"bg-gray-200 rounded-full h-2.5\">\n    <div class=\"bg-blue-600 h-2.5 rounded-full\"\n         [style.width]=\"percentage + '%'\">\n    </div>\n  </div>\n  <p class=\"text-center mt-2\">\n    Progress: {{ current }}/{{ total }} questions\n  </p>\n</div>\n"
         },
         {
             "name": "QuestionCardComponent",
-            "id": "component-QuestionCardComponent-0c10969432597e4793f1abd30a21258881b777426f0b889a004efdcf0476a3d1fe70e5b482cad558bb7709b74954644e69380e143f7abd5fe68b035f5723c039",
-            "file": "src/app/question-list/question-card/question-card.component.ts",
+            "id": "component-QuestionCardComponent-85767134ebe8a6156fc2049864a7b44e44ea2e4f1a994e1d9ffad732ebfb2bf01fa7baefd361545c3c96613b79788ad2fa5a262ffe143cf10ad63210ccee1b96",
+            "file": "src/presentation/question-list/question-card/question-card.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -1453,8 +1783,9 @@
             "selector": "app-question-card",
             "styleUrls": [],
             "styles": [],
-            "template": "<div class=\"p-4 bg-white rounded-lg shadow-md\">\n  <div class=\"flex items-center justify-between mb-4\">\n    <h3 class=\"text-lg font-semibold\">{{ question.text }}</h3>\n    <span class=\"px-3 py-1 text-sm rounded-full\"\n          [ngClass]=\"getStatusClass()\">\n      {{ question.category }}\n    </span>\n  </div>\n  <div class=\"flex justify-end space-x-2\" *ngIf=\"!question.isAnswered\">\n    <button\n      (click)=\"onAnswer(true)\"\n      class=\"px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors\">\n      Correct Answer\n    </button>\n    <button\n      (click)=\"onAnswer(false)\"\n      class=\"px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors\">\n      Incorrect Answer\n    </button>\n  </div>\n  <div *ngIf=\"question.isAnswered\" class=\"mt-2\">\n    <p [ngClass]=\"question.isCorrect ? 'text-green-600' : 'text-red-600'\">\n      {{ question.isCorrect ? '✓ Answered correctly' : '✗ Answered incorrectly' }}\n    </p>\n  </div>\n</div>\n",
-            "templateUrl": [],
+            "templateUrl": [
+                "./question-card.component.html"
+            ],
             "viewProviders": [],
             "hostDirectives": [],
             "inputsClass": [
@@ -1462,7 +1793,7 @@
                     "name": "question",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 37,
+                    "line": 12,
                     "type": "Question",
                     "decorators": []
                 }
@@ -1473,7 +1804,7 @@
                     "defaultValue": "new EventEmitter<{ id: number; isCorrect: boolean }>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 38,
+                    "line": 13,
                     "type": "EventEmitter"
                 }
             ],
@@ -1485,7 +1816,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 44,
+                    "line": 19,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1502,7 +1833,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 40,
+                    "line": 15,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1522,21 +1853,29 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": false,
-            "imports": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "NgClass"
+                },
+                {
+                    "name": "NgIf"
+                }
+            ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { Question } from 'src/app/core/entities/question.entity';\n\n@Component({\n  selector: 'app-question-card',\n  template: `\n    <div class=\"p-4 bg-white rounded-lg shadow-md\">\n      <div class=\"flex items-center justify-between mb-4\">\n        <h3 class=\"text-lg font-semibold\">{{ question.text }}</h3>\n        <span class=\"px-3 py-1 text-sm rounded-full\"\n              [ngClass]=\"getStatusClass()\">\n          {{ question.category }}\n        </span>\n      </div>\n      <div class=\"flex justify-end space-x-2\" *ngIf=\"!question.isAnswered\">\n        <button\n          (click)=\"onAnswer(true)\"\n          class=\"px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors\">\n          Correct Answer\n        </button>\n        <button\n          (click)=\"onAnswer(false)\"\n          class=\"px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors\">\n          Incorrect Answer\n        </button>\n      </div>\n      <div *ngIf=\"question.isAnswered\" class=\"mt-2\">\n        <p [ngClass]=\"question.isCorrect ? 'text-green-600' : 'text-red-600'\">\n          {{ question.isCorrect ? '✓ Answered correctly' : '✗ Answered incorrectly' }}\n        </p>\n      </div>\n    </div>\n  `\n})\nexport class QuestionCardComponent {\n  @Input() question!: Question;\n  @Output() answered = new EventEmitter<{ id: number; isCorrect: boolean }>();\n\n  onAnswer(isCorrect: boolean) {\n    this.answered.emit({ id: this.question.id, isCorrect });\n  }\n\n  getStatusClass(): string {\n    if (!this.question.isAnswered) {\n      return 'bg-blue-100 text-blue-800';\n    }\n    return this.question.isCorrect\n      ? 'bg-green-100 text-green-800'\n      : 'bg-red-100 text-red-800';\n  }\n}\n",
+            "sourceCode": "import { NgClass, NgIf } from '@angular/common';\nimport { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { Question } from 'src/domain/entities/question.entity';\n\n@Component({\n  selector: 'app-question-card',\n  templateUrl: './question-card.component.html',\n  standalone: true,\n  imports: [NgClass, NgIf],\n})\nexport class QuestionCardComponent {\n  @Input() question!: Question;\n  @Output() answered = new EventEmitter<{ id: number; isCorrect: boolean }>();\n\n  onAnswer(isCorrect: boolean) {\n    this.answered.emit({ id: this.question.id, isCorrect });\n  }\n\n  getStatusClass(): string {\n    if (!this.question.isAnswered) {\n      return 'bg-blue-100 text-blue-800';\n    }\n    return this.question.isCorrect\n      ? 'bg-green-100 text-green-800'\n      : 'bg-red-100 text-red-800';\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
-            "extends": []
+            "extends": [],
+            "templateData": "<div class=\"p-4 bg-white rounded-lg shadow-md\">\n  <div class=\"flex items-center justify-between mb-4\">\n    <h3 class=\"text-lg font-semibold\">{{ question.text }}</h3>\n    <span class=\"px-3 py-1 text-sm rounded-full\" [ngClass]=\"getStatusClass()\">\n      {{ question.category }}\n    </span>\n  </div>\n  <div class=\"flex justify-end space-x-2\" *ngIf=\"!question.isAnswered\">\n    <button\n      (click)=\"onAnswer(true)\"\n      class=\"px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors\"\n    >\n      Correct Answer\n    </button>\n    <button\n      (click)=\"onAnswer(false)\"\n      class=\"px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors\"\n    >\n      Incorrect Answer\n    </button>\n  </div>\n  <div *ngIf=\"question.isAnswered\" class=\"mt-2\">\n    <p [ngClass]=\"question.isCorrect ? 'text-green-600' : 'text-red-600'\">\n      {{\n        question.isCorrect ? \"✓ Answered correctly\" : \"✗ Answered incorrectly\"\n      }}\n    </p>\n  </div>\n</div>\n"
         },
         {
             "name": "QuestionListComponent",
-            "id": "component-QuestionListComponent-fb10f1de93ece3c9f3cfe474707ca4df8afac7626df31cbe16ba41705a259016e171a0391a9cc8f326e8b55210df4eec14d8febc05064f098e68c6d405f6e2c3",
-            "file": "src/app/question-list/question-list.component.ts",
+            "id": "component-QuestionListComponent-21a5869e02c85608f2de5925d8481cc54496a6d8cac4d16a4fcd33b1ebd186e87e4b055d6b5ae309bee6d3dc11d1322797c80c5897066136ef5bc8816805eb37",
+            "file": "src/presentation/question-list/question-list.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -1545,34 +1884,27 @@
             "selector": "app-question-list",
             "styleUrls": [],
             "styles": [],
-            "template": "<div class=\"container mx-auto px-4 py-8\">\n  <div *ngIf=\"!selectedCategory\" class=\"mb-8\">\n    <h2 class=\"text-2xl font-bold mb-6\">Select a Category</h2>\n    <app-category-selection\n      (categorySelected)=\"onCategorySelected($event)\">\n    </app-category-selection>\n  </div>\n\n  <div *ngIf=\"selectedCategory && questions.length > 0\">\n    <div class=\"mb-8\">\n      <button\n        (click)=\"resetCategory()\"\n        class=\"text-blue-600 hover:text-blue-800\">\n        ← Back to Categories\n      </button>\n    </div>\n\n    <app-question-viewer\n      [questions]=\"questions\"\n      (answered)=\"onQuestionAnswered($event)\">\n    </app-question-viewer>\n\n    <app-progress-bar\n      [current]=\"answeredCount\"\n      [total]=\"totalQuestions\"\n      [percentage]=\"progressPercentage\">\n    </app-progress-bar>\n  </div>\n</div>\n",
-            "templateUrl": [],
+            "templateUrl": [
+                "./question-list.component.html"
+            ],
             "viewProviders": [],
             "hostDirectives": [],
             "inputsClass": [],
             "outputsClass": [],
             "propertiesClass": [
                 {
-                    "name": "questions",
-                    "defaultValue": "[]",
+                    "name": "state",
+                    "defaultValue": "inject(QuestionState)",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Question[]",
+                    "type": "",
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 46
-                },
-                {
-                    "name": "selectedCategory",
-                    "defaultValue": "null",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string | null",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 45
+                    "line": 20,
+                    "modifierKind": [
+                        124
+                    ]
                 }
             ],
             "methodsClass": [
@@ -1587,11 +1919,14 @@
                         }
                     ],
                     "optional": false,
-                    "returnType": "void",
+                    "returnType": "any",
                     "typeParameters": [],
-                    "line": 65,
+                    "line": 22,
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "modifierKind": [
+                        134
+                    ],
                     "jsdoctags": [
                         {
                             "name": "event",
@@ -1615,11 +1950,14 @@
                         }
                     ],
                     "optional": false,
-                    "returnType": "void",
+                    "returnType": "any",
                     "typeParameters": [],
-                    "line": 79,
+                    "line": 29,
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "modifierKind": [
+                        134
+                    ],
                     "jsdoctags": [
                         {
                             "name": "event",
@@ -1631,107 +1969,44 @@
                             }
                         }
                     ]
-                },
-                {
-                    "name": "resetCategory",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 74,
-                    "deprecated": false,
-                    "deprecationMessage": ""
                 }
             ],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": false,
-            "imports": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "NgIf"
+                },
+                {
+                    "name": "CategorySelectionComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "QuestionViewerComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "ProgressBarComponent",
+                    "type": "component"
+                }
+            ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { CategorySelectionComponent } from '../category-selection/category-selection.component';\nimport { QuestionViewerComponent } from '../question-viewer/question-viewer.component';\nimport { ProgressBarComponent } from './progress-bar/progress-bar.component';\nimport { Question } from '../core/entities/question.entity';\nimport { GetQuestionsByCategoryUseCase } from '../core/use-cases/get-questions-by-category.use-case';\nimport { MarkQuestionAnsweredUseCase } from '../core/use-cases/mark-questions-answered.use-case';\n\n@Component({\n  selector: 'app-question-list',\n  template: `\n    <div class=\"container mx-auto px-4 py-8\">\n      <div *ngIf=\"!selectedCategory\" class=\"mb-8\">\n        <h2 class=\"text-2xl font-bold mb-6\">Select a Category</h2>\n        <app-category-selection\n          (categorySelected)=\"onCategorySelected($event)\">\n        </app-category-selection>\n      </div>\n\n      <div *ngIf=\"selectedCategory && questions.length > 0\">\n        <div class=\"mb-8\">\n          <button\n            (click)=\"resetCategory()\"\n            class=\"text-blue-600 hover:text-blue-800\">\n            ← Back to Categories\n          </button>\n        </div>\n\n        <app-question-viewer\n          [questions]=\"questions\"\n          (answered)=\"onQuestionAnswered($event)\">\n        </app-question-viewer>\n\n        <app-progress-bar\n          [current]=\"answeredCount\"\n          [total]=\"totalQuestions\"\n          [percentage]=\"progressPercentage\">\n        </app-progress-bar>\n      </div>\n    </div>\n  `\n})\nexport class QuestionListComponent {\n  selectedCategory: string | null = null;\n  questions: Question[] = [];\n\n  get answeredCount(): number {\n    return this.questions.filter(q => q.isAnswered).length;\n  }\n\n  get totalQuestions(): number {\n    return this.questions.length;\n  }\n\n  get progressPercentage(): number {\n    return (this.answeredCount / this.totalQuestions) * 100;\n  }\n\n  constructor(\n    private getQuestionsByCategoryUseCase: GetQuestionsByCategoryUseCase,\n    private markQuestionAnsweredUseCase: MarkQuestionAnsweredUseCase\n  ) {}\n\n  onCategorySelected(event: {categoryId: string, questionCount: number}) {\n    this.selectedCategory = event.categoryId;\n    this.getQuestionsByCategoryUseCase.execute(event.categoryId).subscribe(\n      questions => {\n        this.questions = questions.slice(0, event.questionCount);\n      }\n    );\n  }\n\n  resetCategory() {\n    this.selectedCategory = null;\n    this.questions = [];\n  }\n\n  onQuestionAnswered(event: { id: number; isCorrect: boolean }) {\n    this.markQuestionAnsweredUseCase.execute(event.id, event.isCorrect)\n      .subscribe(() => {\n        const question = this.questions.find(q => q.id === event.id);\n        if (question) {\n          question.isAnswered = true;\n          question.isCorrect = event.isCorrect;\n        }\n      });\n  }\n}\n",
+            "sourceCode": "import { NgIf } from '@angular/common';\nimport { Component, inject } from '@angular/core';\nimport { CategorySelectionComponent } from '../category-selection/category-selection.component';\nimport { QuestionViewerComponent } from '../question-viewer/question-viewer.component';\nimport { QuestionState } from '../state/question.state';\nimport { ProgressBarComponent } from './progress-bar/progress-bar.component';\n\n@Component({\n  selector: 'app-question-list',\n  templateUrl: './question-list.component.html',\n  standalone: true,\n  imports: [\n    NgIf,\n    CategorySelectionComponent,\n    QuestionViewerComponent,\n    ProgressBarComponent,\n  ],\n})\nexport class QuestionListComponent {\n  protected state = inject(QuestionState);\n\n  async onCategorySelected(event: {\n    categoryId: string;\n    questionCount: number;\n  }) {\n    await this.state.loadQuestions(event.categoryId, event.questionCount);\n  }\n\n  async onQuestionAnswered(event: { id: number; isCorrect: boolean }) {\n    await this.state.answerQuestion(event.id, event.isCorrect);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "args": [
-                    {
-                        "name": "getQuestionsByCategoryUseCase",
-                        "type": "GetQuestionsByCategoryUseCase",
-                        "deprecated": false,
-                        "deprecationMessage": ""
-                    },
-                    {
-                        "name": "markQuestionAnsweredUseCase",
-                        "type": "MarkQuestionAnsweredUseCase",
-                        "deprecated": false,
-                        "deprecationMessage": ""
-                    }
-                ],
-                "line": 58,
-                "jsdoctags": [
-                    {
-                        "name": "getQuestionsByCategoryUseCase",
-                        "type": "GetQuestionsByCategoryUseCase",
-                        "deprecated": false,
-                        "deprecationMessage": "",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    },
-                    {
-                        "name": "markQuestionAnsweredUseCase",
-                        "type": "MarkQuestionAnsweredUseCase",
-                        "deprecated": false,
-                        "deprecationMessage": "",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            },
             "extends": [],
-            "accessors": {
-                "answeredCount": {
-                    "name": "answeredCount",
-                    "getSignature": {
-                        "name": "answeredCount",
-                        "type": "number",
-                        "returnType": "number",
-                        "line": 48
-                    }
-                },
-                "totalQuestions": {
-                    "name": "totalQuestions",
-                    "getSignature": {
-                        "name": "totalQuestions",
-                        "type": "number",
-                        "returnType": "number",
-                        "line": 52
-                    }
-                },
-                "progressPercentage": {
-                    "name": "progressPercentage",
-                    "getSignature": {
-                        "name": "progressPercentage",
-                        "type": "number",
-                        "returnType": "number",
-                        "line": 56
-                    }
-                }
-            }
+            "templateData": "<div class=\"container mx-auto px-4 py-8\">\n  <div *ngIf=\"!state.selectedCategory()\" class=\"mb-8\">\n    <h2 class=\"text-2xl font-bold mb-6\">Select a Category</h2>\n    <app-category-selection (categorySelected)=\"onCategorySelected($event)\">\n    </app-category-selection>\n  </div>\n\n  <div *ngIf=\"state.selectedCategory() && state.questions().length > 0\">\n    <div class=\"mb-8\">\n      <button\n        (click)=\"state.resetCategory()\"\n        class=\"text-blue-600 hover:text-blue-800\"\n      >\n        ← Back to Categories\n      </button>\n    </div>\n\n    <app-question-viewer\n      [questions]=\"state.questions()\"\n      [currentIndex]=\"state.currentIndex()\"\n      (answered)=\"onQuestionAnswered($event)\"\n      (next)=\"state.nextQuestion()\"\n      (previous)=\"state.previousQuestion()\"\n    >\n    </app-question-viewer>\n\n    <app-progress-bar\n      [current]=\"state.answeredCount()\"\n      [total]=\"state.totalQuestions()\"\n      [percentage]=\"state.progressPercentage()\"\n    >\n    </app-progress-bar>\n  </div>\n</div>\n"
         },
         {
             "name": "QuestionViewerComponent",
-            "id": "component-QuestionViewerComponent-e7b1833d95cc910e9659b5031b6ebb7bd46ee34f2c7c07d65bc977be0aa60a721d6921a566247a65ccbc1cf2c7fd19895fe2e6bc740601e0ab424a69988239c1",
-            "file": "src/app/question-viewer/question-viewer.component.ts",
+            "id": "component-QuestionViewerComponent-a9207c8d3428fedf43e974c7d10c1aacda6c38f3a4b8a2068367ec324b167a2c73e2801a3b2a0bcb54b9be8dc034a1ab7d4eb60c26b1b178a8c68577ec350026",
+            "file": "src/presentation/question-viewer/question-viewer.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -1740,17 +2015,27 @@
             "selector": "app-question-viewer",
             "styleUrls": [],
             "styles": [],
-            "template": "<div class=\"bg-white rounded-lg shadow-md p-6\">\n  <div class=\"flex justify-between items-center mb-6\">\n    <button\n      (click)=\"previousQuestion()\"\n      [disabled]=\"currentIndex === 0\"\n      class=\"px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50\">\n      ← Previous\n    </button>\n    <span class=\"text-gray-600\">Question {{ currentIndex + 1 }} of {{ totalQuestions }}</span>\n    <button\n      (click)=\"nextQuestion()\"\n      [disabled]=\"currentIndex === totalQuestions - 1\"\n      class=\"px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50\">\n      Next →\n    </button>\n  </div>\n\n  <div class=\"mb-8\">\n    <h3 class=\"text-xl font-semibold mb-4\">{{ currentQuestion?.text }}</h3>\n  </div>\n\n  <div class=\"flex justify-end space-x-4\" *ngIf=\"!currentQuestion?.isAnswered\">\n    <button\n      (click)=\"onAnswer(false)\"\n      class=\"px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors\">\n      Incorrect\n    </button>\n    <button\n      (click)=\"onAnswer(true)\"\n      class=\"px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors\">\n      Correct\n    </button>\n  </div>\n\n  <div *ngIf=\"currentQuestion?.isAnswered\" class=\"mt-4\">\n    <p [ngClass]=\"currentQuestion?.isCorrect ? 'text-green-600' : 'text-red-600'\">\n      {{ currentQuestion?.isCorrect ? '✓ Answered correctly' : '✗ Answered incorrectly' }}\n    </p>\n  </div>\n</div>\n",
-            "templateUrl": [],
+            "templateUrl": [
+                "./question-viewer.component.html"
+            ],
             "viewProviders": [],
             "hostDirectives": [],
             "inputsClass": [
+                {
+                    "name": "currentIndex",
+                    "defaultValue": "0",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 13,
+                    "type": "number",
+                    "decorators": []
+                },
                 {
                     "name": "questions",
                     "defaultValue": "[]",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 51,
+                    "line": 12,
                     "type": "Question[]",
                     "decorators": []
                 }
@@ -1761,34 +2046,28 @@
                     "defaultValue": "new EventEmitter<{ id: number; isCorrect: boolean }>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 52,
+                    "line": 14,
+                    "type": "EventEmitter"
+                },
+                {
+                    "name": "next",
+                    "defaultValue": "new EventEmitter<void>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 15,
+                    "type": "EventEmitter"
+                },
+                {
+                    "name": "previous",
+                    "defaultValue": "new EventEmitter<void>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 16,
                     "type": "EventEmitter"
                 }
             ],
-            "propertiesClass": [
-                {
-                    "name": "currentIndex",
-                    "defaultValue": "0",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 54
-                }
-            ],
+            "propertiesClass": [],
             "methodsClass": [
-                {
-                    "name": "nextQuestion",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 70,
-                    "deprecated": false,
-                    "deprecationMessage": ""
-                },
                 {
                     "name": "onAnswer",
                     "args": [
@@ -1802,7 +2081,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 76,
+                    "line": 22,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1816,28 +2095,25 @@
                             }
                         }
                     ]
-                },
-                {
-                    "name": "previousQuestion",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 64,
-                    "deprecated": false,
-                    "deprecationMessage": ""
                 }
             ],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": false,
-            "imports": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "NgIf"
+                },
+                {
+                    "name": "NgClass"
+                }
+            ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { Question } from '../core/entities/question.entity';\n\n@Component({\n  selector: 'app-question-viewer',\n  template: `\n    <div class=\"bg-white rounded-lg shadow-md p-6\">\n      <div class=\"flex justify-between items-center mb-6\">\n        <button\n          (click)=\"previousQuestion()\"\n          [disabled]=\"currentIndex === 0\"\n          class=\"px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50\">\n          ← Previous\n        </button>\n        <span class=\"text-gray-600\">Question {{ currentIndex + 1 }} of {{ totalQuestions }}</span>\n        <button\n          (click)=\"nextQuestion()\"\n          [disabled]=\"currentIndex === totalQuestions - 1\"\n          class=\"px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50\">\n          Next →\n        </button>\n      </div>\n\n      <div class=\"mb-8\">\n        <h3 class=\"text-xl font-semibold mb-4\">{{ currentQuestion?.text }}</h3>\n      </div>\n\n      <div class=\"flex justify-end space-x-4\" *ngIf=\"!currentQuestion?.isAnswered\">\n        <button\n          (click)=\"onAnswer(false)\"\n          class=\"px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors\">\n          Incorrect\n        </button>\n        <button\n          (click)=\"onAnswer(true)\"\n          class=\"px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors\">\n          Correct\n        </button>\n      </div>\n\n      <div *ngIf=\"currentQuestion?.isAnswered\" class=\"mt-4\">\n        <p [ngClass]=\"currentQuestion?.isCorrect ? 'text-green-600' : 'text-red-600'\">\n          {{ currentQuestion?.isCorrect ? '✓ Answered correctly' : '✗ Answered incorrectly' }}\n        </p>\n      </div>\n    </div>\n  `\n})\nexport class QuestionViewerComponent {\n  @Input() questions: Question[] = [];\n  @Output() answered = new EventEmitter<{ id: number; isCorrect: boolean }>();\n\n  currentIndex = 0;\n\n  get currentQuestion(): Question | undefined {\n    return this.questions[this.currentIndex];\n  }\n\n  get totalQuestions(): number {\n    return this.questions.length;\n  }\n\n  previousQuestion() {\n    if (this.currentIndex > 0) {\n      this.currentIndex--;\n    }\n  }\n\n  nextQuestion() {\n    if (this.currentIndex < this.questions.length - 1) {\n      this.currentIndex++;\n    }\n  }\n\n  onAnswer(isCorrect: boolean) {\n    if (this.currentQuestion) {\n      this.answered.emit({ id: this.currentQuestion.id, isCorrect });\n    }\n  }\n}\n",
+            "sourceCode": "import { NgClass, NgIf } from '@angular/common';\nimport { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { Question } from '../../domain/entities/question.entity';\n\n@Component({\n  selector: 'app-question-viewer',\n  templateUrl: './question-viewer.component.html',\n  standalone: true,\n  imports: [NgIf, NgClass],\n})\nexport class QuestionViewerComponent {\n  @Input() questions: Question[] = [];\n  @Input() currentIndex = 0;\n  @Output() answered = new EventEmitter<{ id: number; isCorrect: boolean }>();\n  @Output() next = new EventEmitter<void>();\n  @Output() previous = new EventEmitter<void>();\n\n  get currentQuestion(): Question | undefined {\n    return this.questions[this.currentIndex];\n  }\n\n  onAnswer(isCorrect: boolean) {\n    if (this.currentQuestion) {\n      this.answered.emit({ id: this.currentQuestion.id, isCorrect });\n    }\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -1849,138 +2125,21 @@
                         "name": "currentQuestion",
                         "type": "",
                         "returnType": "Question | undefined",
-                        "line": 56
-                    }
-                },
-                "totalQuestions": {
-                    "name": "totalQuestions",
-                    "getSignature": {
-                        "name": "totalQuestions",
-                        "type": "number",
-                        "returnType": "number",
-                        "line": 60
+                        "line": 18
                     }
                 }
-            }
+            },
+            "templateData": "<div class=\"bg-white rounded-lg shadow-md p-6\">\n  <div class=\"flex justify-between items-center mb-6\">\n    <button\n      (click)=\"previous.emit()\"\n      [disabled]=\"currentIndex === 0\"\n      class=\"px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50\"\n    >\n      ← Previous\n    </button>\n    <span class=\"text-gray-600\"\n      >Question {{ currentIndex + 1 }} of {{ questions.length }}</span\n    >\n    <button\n      (click)=\"next.emit()\"\n      [disabled]=\"currentIndex === questions.length - 1\"\n      class=\"px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50\"\n    >\n      Next →\n    </button>\n  </div>\n\n  <div class=\"mb-8\">\n    <h3 class=\"text-xl font-semibold mb-4\">{{ currentQuestion?.text }}</h3>\n  </div>\n\n  <div class=\"flex justify-end space-x-4\" *ngIf=\"!currentQuestion?.isAnswered\">\n    <button\n      (click)=\"onAnswer(false)\"\n      class=\"px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors\"\n    >\n      Incorrect\n    </button>\n    <button\n      (click)=\"onAnswer(true)\"\n      class=\"px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors\"\n    >\n      Correct\n    </button>\n  </div>\n\n  <div *ngIf=\"currentQuestion?.isAnswered\" class=\"mt-4\">\n    <p\n      [ngClass]=\"currentQuestion?.isCorrect ? 'text-green-600' : 'text-red-600'\"\n    >\n      {{\n        currentQuestion?.isCorrect\n          ? \"✓ Answered correctly\"\n          : \"✗ Answered incorrectly\"\n      }}\n    </p>\n  </div>\n</div>\n"
         }
     ],
-    "modules": [
-        {
-            "name": "AppModule",
-            "id": "module-AppModule-a132fb8763e78ed6e9d2dd6f1d4dbb09e54ecd6450bbf5580a7189dd7a00b6331399868515c63de2fe5360c5c4bfc94bfc77416e0b68bc214cf06e40862a26c3",
-            "description": "",
-            "deprecationMessage": "",
-            "deprecated": false,
-            "file": "src/app/app.module.ts",
-            "methods": [],
-            "sourceCode": "import { InjectionToken, NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { QuestionListComponent } from './question-list/question-list.component';\nimport { QuestionRepositoryImpl } from 'src/app/infrastructure/repositories/question.repository.impl';\nimport { QuestionRepository } from 'src/app/core/repositories/question.repository';\nimport { ProgressBarComponent } from './question-list/progress-bar/progress-bar.component';\nimport { QuestionCardComponent } from './question-list/question-card/question-card.component';\nimport { CategorySelectionComponent } from './category-selection/category-selection.component';\nimport { QuestionViewerComponent } from './question-viewer/question-viewer.component';\nimport { NavigationComponent } from './navigation/navigation.component';\nimport { LandingPageComponent } from './landing-page/landing-page.component';\nimport { PricingPageComponent } from './pricing-page/pricing-page.component';\n\nexport const IQuestionRepository = new InjectionToken<QuestionRepository>('QuestionRepository');\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    QuestionListComponent,\n    ProgressBarComponent,\n    QuestionCardComponent,\n    CategorySelectionComponent,\n    QuestionViewerComponent,\n    NavigationComponent,\n    LandingPageComponent,\n    PricingPageComponent\n  ],\n  imports: [\n    BrowserModule,\n    AppRoutingModule\n  ],\n  providers: [\n      { provide: IQuestionRepository, useValue: new QuestionRepositoryImpl() }\n\n  ],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n",
-            "children": [
-                {
-                    "type": "providers",
-                    "elements": []
-                },
-                {
-                    "type": "declarations",
-                    "elements": [
-                        {
-                            "name": "AppComponent"
-                        },
-                        {
-                            "name": "CategorySelectionComponent"
-                        },
-                        {
-                            "name": "LandingPageComponent"
-                        },
-                        {
-                            "name": "NavigationComponent"
-                        },
-                        {
-                            "name": "PricingPageComponent"
-                        },
-                        {
-                            "name": "ProgressBarComponent"
-                        },
-                        {
-                            "name": "QuestionCardComponent"
-                        },
-                        {
-                            "name": "QuestionListComponent"
-                        },
-                        {
-                            "name": "QuestionViewerComponent"
-                        }
-                    ]
-                },
-                {
-                    "type": "imports",
-                    "elements": [
-                        {
-                            "name": "AppRoutingModule"
-                        }
-                    ]
-                },
-                {
-                    "type": "exports",
-                    "elements": []
-                },
-                {
-                    "type": "bootstrap",
-                    "elements": [
-                        {
-                            "name": "AppComponent"
-                        }
-                    ]
-                },
-                {
-                    "type": "classes",
-                    "elements": []
-                }
-            ]
-        },
-        {
-            "name": "AppRoutingModule",
-            "id": "module-AppRoutingModule-f3e80ece5c122fd0a034574a0a05806214a052ee78f8292dc399b1b5a376f9686270edf7733a1cae65f3f1457776d1deb08ac0dbd512b56e713619e711cc0b00",
-            "description": "",
-            "deprecationMessage": "",
-            "deprecated": false,
-            "file": "src/app/app-routing.module.ts",
-            "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { LandingPageComponent } from './landing-page/landing-page.component';\nimport { PricingPageComponent } from './pricing-page/pricing-page.component';\nimport { QuestionListComponent } from './question-list/question-list.component';\n\nexport const routes: Routes = [\n  { path: '', component: LandingPageComponent },\n  { path: 'questions', component: QuestionListComponent },\n  { path: 'pricing', component: PricingPageComponent },\n];\n\n@NgModule({\n  imports: [RouterModule.forRoot(routes)],\n  exports: [RouterModule]\n})\nexport class AppRoutingModule { }\n",
-            "children": [
-                {
-                    "type": "providers",
-                    "elements": []
-                },
-                {
-                    "type": "declarations",
-                    "elements": []
-                },
-                {
-                    "type": "imports",
-                    "elements": []
-                },
-                {
-                    "type": "exports",
-                    "elements": []
-                },
-                {
-                    "type": "bootstrap",
-                    "elements": []
-                },
-                {
-                    "type": "classes",
-                    "elements": []
-                }
-            ]
-        }
-    ],
+    "modules": [],
     "miscellaneous": {
         "variables": [
             {
                 "name": "backendDevelopmentQuestions",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/infrastructure/repositories/questions-data.ts",
+                "file": "src/infrastructure/repositories/questions-data.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "[]",
@@ -1990,7 +2149,7 @@
                 "name": "CATEGORIES",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/core/models/category.model.ts",
+                "file": "src/domain/models/category.model.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Category[]",
@@ -2000,7 +2159,7 @@
                 "name": "frontendDevelopmentQuestions",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/infrastructure/repositories/questions-data.ts",
+                "file": "src/infrastructure/repositories/questions-data.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "[]",
@@ -2010,17 +2169,27 @@
                 "name": "IQuestionRepository",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/app.module.ts",
+                "file": "src/main.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "new InjectionToken<QuestionRepository>('QuestionRepository')"
             },
             {
+                "name": "mockQuestions",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/presentation/question-list/testing/mock-data.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Question[]",
+                "defaultValue": "[\n  new Question(\n    1,\n    'What is Clean Architecture and how does it improve software design?',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    2,\n    'Explain Test-Driven Development (TDD) and its benefits',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    3,\n    'What are the SOLID principles and why are they important?',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    4,\n    'How do you implement Dependency Injection in a Spring application?',\n    'backend-development',\n    false,\n  ),\n  new Question(\n    5,\n    'Explain the Virtual DOM concept in React',\n    'frontend-development',\n    false,\n  ),\n]"
+            },
+            {
                 "name": "QUESTION_COUNT_OPTIONS",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/core/models/category.model.ts",
+                "file": "src/domain/models/category.model.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "[]",
@@ -2030,7 +2199,7 @@
                 "name": "softwareCraftmanshipQuestions",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/infrastructure/repositories/questions-data.ts",
+                "file": "src/infrastructure/repositories/questions-data.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "[]",
@@ -2039,8 +2208,47 @@
         ],
         "functions": [
             {
+                "name": "answerSomeQuestions",
+                "file": "src/presentation/question-list/testing/story-actions.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "state",
+                        "type": "QuestionState",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "state",
+                        "type": "QuestionState",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "createMockQuestionState",
+                "file": "src/presentation/question-list/testing/mock-state.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [],
+                "returnType": "QuestionState"
+            },
+            {
                 "name": "generateQuestions",
-                "file": "src/app/infrastructure/repositories/questions-data.ts",
+                "file": "src/infrastructure/repositories/questions-data.ts",
                 "ctype": "miscellaneous",
                 "subtype": "function",
                 "deprecated": false,
@@ -2048,17 +2256,73 @@
                 "description": "",
                 "args": [],
                 "returnType": "Question[]"
+            },
+            {
+                "name": "loadQuestionsWithCategory",
+                "file": "src/presentation/question-list/testing/story-actions.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "state",
+                        "type": "QuestionState",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "state",
+                        "type": "QuestionState",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "resetState",
+                "file": "src/presentation/question-list/testing/story-actions.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "state",
+                        "type": "QuestionState",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "state",
+                        "type": "QuestionState",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
             }
         ],
         "typealiases": [],
         "enumerations": [],
         "groupedVariables": {
-            "src/app/infrastructure/repositories/questions-data.ts": [
+            "src/infrastructure/repositories/questions-data.ts": [
                 {
                     "name": "backendDevelopmentQuestions",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/infrastructure/repositories/questions-data.ts",
+                    "file": "src/infrastructure/repositories/questions-data.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "[]",
@@ -2068,7 +2332,7 @@
                     "name": "frontendDevelopmentQuestions",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/infrastructure/repositories/questions-data.ts",
+                    "file": "src/infrastructure/repositories/questions-data.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "[]",
@@ -2078,19 +2342,19 @@
                     "name": "softwareCraftmanshipQuestions",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/infrastructure/repositories/questions-data.ts",
+                    "file": "src/infrastructure/repositories/questions-data.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "[]",
                     "defaultValue": "[\n  \"Explain Test-Driven Development (TDD) and its benefits\",\n  \"What are the SOLID principles and why are they important?\",\n  \"Explain the concept of Clean Architecture\",\n  \"What is Domain-Driven Design (DDD)?\",\n  \"How do you handle technical debt?\",\n  // ... (continue with more questions)\n]"
                 }
             ],
-            "src/app/core/models/category.model.ts": [
+            "src/domain/models/category.model.ts": [
                 {
                     "name": "CATEGORIES",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/core/models/category.model.ts",
+                    "file": "src/domain/models/category.model.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Category[]",
@@ -2100,31 +2364,142 @@
                     "name": "QUESTION_COUNT_OPTIONS",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/core/models/category.model.ts",
+                    "file": "src/domain/models/category.model.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "[]",
                     "defaultValue": "[\n  { value: 10, label: '10 Questions' },\n  { value: 25, label: '25 Questions' },\n  { value: 50, label: '50 Questions' }\n]"
                 }
             ],
-            "src/app/app.module.ts": [
+            "src/main.ts": [
                 {
                     "name": "IQuestionRepository",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/app.module.ts",
+                    "file": "src/main.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "new InjectionToken<QuestionRepository>('QuestionRepository')"
                 }
+            ],
+            "src/presentation/question-list/testing/mock-data.ts": [
+                {
+                    "name": "mockQuestions",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/presentation/question-list/testing/mock-data.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Question[]",
+                    "defaultValue": "[\n  new Question(\n    1,\n    'What is Clean Architecture and how does it improve software design?',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    2,\n    'Explain Test-Driven Development (TDD) and its benefits',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    3,\n    'What are the SOLID principles and why are they important?',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    4,\n    'How do you implement Dependency Injection in a Spring application?',\n    'backend-development',\n    false,\n  ),\n  new Question(\n    5,\n    'Explain the Virtual DOM concept in React',\n    'frontend-development',\n    false,\n  ),\n]"
+                }
             ]
         },
         "groupedFunctions": {
-            "src/app/infrastructure/repositories/questions-data.ts": [
+            "src/presentation/question-list/testing/story-actions.ts": [
+                {
+                    "name": "answerSomeQuestions",
+                    "file": "src/presentation/question-list/testing/story-actions.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "state",
+                            "type": "QuestionState",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "state",
+                            "type": "QuestionState",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "loadQuestionsWithCategory",
+                    "file": "src/presentation/question-list/testing/story-actions.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "state",
+                            "type": "QuestionState",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "state",
+                            "type": "QuestionState",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "resetState",
+                    "file": "src/presentation/question-list/testing/story-actions.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "state",
+                            "type": "QuestionState",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "state",
+                            "type": "QuestionState",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "src/presentation/question-list/testing/mock-state.ts": [
+                {
+                    "name": "createMockQuestionState",
+                    "file": "src/presentation/question-list/testing/mock-state.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [],
+                    "returnType": "QuestionState"
+                }
+            ],
+            "src/infrastructure/repositories/questions-data.ts": [
                 {
                     "name": "generateQuestions",
-                    "file": "src/app/infrastructure/repositories/questions-data.ts",
+                    "file": "src/infrastructure/repositories/questions-data.ts",
                     "ctype": "miscellaneous",
                     "subtype": "function",
                     "deprecated": false,
@@ -2138,85 +2513,22 @@
         "groupedEnumerations": {},
         "groupedTypeAliases": {}
     },
-    "routes": {
-        "name": "<root>",
-        "kind": "module",
-        "className": "AppModule",
-        "children": [
-            {
-                "name": "routes",
-                "filename": "src/app/app-routing.module.ts",
-                "module": "AppRoutingModule",
-                "children": [
-                    {
-                        "path": "",
-                        "component": "LandingPageComponent"
-                    },
-                    {
-                        "path": "questions",
-                        "component": "QuestionListComponent"
-                    },
-                    {
-                        "path": "pricing",
-                        "component": "PricingPageComponent"
-                    }
-                ],
-                "kind": "module"
-            }
-        ]
-    },
+    "routes": [],
     "coverage": {
         "count": 2,
         "status": "low",
         "files": [
             {
-                "filePath": "src/app/app.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "AppComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/2",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/app.module.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "IQuestionRepository",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/category-selection/category-selection.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "CategorySelectionComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/9",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/core/entities/question.entity.ts",
+                "filePath": "src/domain/entities/question.entity.ts",
                 "type": "class",
                 "linktype": "classe",
-                "name": "QuestionImpl",
-                "coveragePercent": 0,
-                "coverageCount": "0/6",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/core/entities/question.entity.ts",
-                "type": "interface",
-                "linktype": "interface",
                 "name": "Question",
                 "coveragePercent": 0,
-                "coverageCount": "0/6",
+                "coverageCount": "0/7",
                 "status": "low"
             },
             {
-                "filePath": "src/app/core/models/category.model.ts",
+                "filePath": "src/domain/models/category.model.ts",
                 "type": "interface",
                 "linktype": "interface",
                 "name": "Category",
@@ -2225,7 +2537,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/core/models/category.model.ts",
+                "filePath": "src/domain/models/category.model.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -2235,7 +2547,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/core/models/category.model.ts",
+                "filePath": "src/domain/models/category.model.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -2245,7 +2557,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/core/repositories/question.repository.ts",
+                "filePath": "src/domain/repositories/question.repository.ts",
                 "type": "interface",
                 "linktype": "interface",
                 "name": "QuestionRepository",
@@ -2254,7 +2566,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/core/use-cases/get-questions-by-category.use-case.ts",
+                "filePath": "src/domain/use-cases/get-questions-by-category.use-case.ts",
                 "type": "injectable",
                 "linktype": "injectable",
                 "name": "GetQuestionsByCategoryUseCase",
@@ -2263,7 +2575,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/core/use-cases/get-questions.use-case.ts",
+                "filePath": "src/domain/use-cases/get-questions.use-case.ts",
                 "type": "injectable",
                 "linktype": "injectable",
                 "name": "GetQuestionsUseCase",
@@ -2272,7 +2584,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/core/use-cases/mark-questions-answered.use-case.ts",
+                "filePath": "src/domain/use-cases/mark-questions-answered.use-case.ts",
                 "type": "injectable",
                 "linktype": "injectable",
                 "name": "MarkQuestionAnsweredUseCase",
@@ -2281,16 +2593,16 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/infrastructure/repositories/question.repository.impl.ts",
+                "filePath": "src/infrastructure/repositories/question.repository.in.memory.ts",
                 "type": "injectable",
                 "linktype": "injectable",
-                "name": "QuestionRepositoryImpl",
+                "name": "QuestionRepositoryInMemory",
                 "coveragePercent": 0,
                 "coverageCount": "0/5",
                 "status": "low"
             },
             {
-                "filePath": "src/app/infrastructure/repositories/questions-data.ts",
+                "filePath": "src/infrastructure/repositories/questions-data.ts",
                 "type": "function",
                 "linktype": "miscellaneous",
                 "linksubtype": "function",
@@ -2300,7 +2612,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/infrastructure/repositories/questions-data.ts",
+                "filePath": "src/infrastructure/repositories/questions-data.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -2310,7 +2622,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/infrastructure/repositories/questions-data.ts",
+                "filePath": "src/infrastructure/repositories/questions-data.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -2320,7 +2632,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/infrastructure/repositories/questions-data.ts",
+                "filePath": "src/infrastructure/repositories/questions-data.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -2330,7 +2642,35 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/landing-page/landing-page.component.ts",
+                "filePath": "src/main.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "IQuestionRepository",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/presentation/app.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "AppComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/presentation/category-selection/category-selection.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CategorySelectionComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "src/presentation/landing-page/landing-page.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "LandingPageComponent",
@@ -2339,16 +2679,16 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/navigation/navigation.component.ts",
+                "filePath": "src/presentation/navigation/navigation.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "NavigationComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/1",
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {
-                "filePath": "src/app/pricing-page/pricing-page.component.ts",
+                "filePath": "src/presentation/pricing-page/pricing-page.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "PricingPageComponent",
@@ -2357,7 +2697,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/question-list/progress-bar/progress-bar.component.ts",
+                "filePath": "src/presentation/question-list/progress-bar/progress-bar.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "ProgressBarComponent",
@@ -2366,7 +2706,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/question-list/question-card/question-card.component.ts",
+                "filePath": "src/presentation/question-list/question-card/question-card.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "QuestionCardComponent",
@@ -2375,21 +2715,80 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/question-list/question-list.component.ts",
+                "filePath": "src/presentation/question-list/question-list.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "QuestionListComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/7",
+                "coverageCount": "0/4",
                 "status": "low"
             },
             {
-                "filePath": "src/app/question-viewer/question-viewer.component.ts",
+                "filePath": "src/presentation/question-list/testing/mock-data.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "mockQuestions",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/presentation/question-list/testing/mock-state.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "createMockQuestionState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/presentation/question-list/testing/story-actions.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "answerSomeQuestions",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/presentation/question-list/testing/story-actions.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "loadQuestionsWithCategory",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/presentation/question-list/testing/story-actions.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "resetState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/presentation/question-viewer/question-viewer.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "QuestionViewerComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/7",
+                "status": "low"
+            },
+            {
+                "filePath": "src/presentation/state/question.state.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "QuestionState",
+                "coveragePercent": 0,
+                "coverageCount": "0/17",
                 "status": "low"
             },
             {

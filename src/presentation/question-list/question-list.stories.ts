@@ -1,32 +1,33 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { of } from 'rxjs';
-import { Question } from '../../domain/entities/question.entity';
+import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
+import { QuestionState } from '../state/question.state';
 import { QuestionListComponent } from './question-list.component';
-import { GetQuestionsUseCase } from 'src/domain/use-cases/get-questions.use-case';
-
-const mockQuestions = [
-  new Question(
-    1,
-    'What is Clean Architecture?',
-    'Software Craftsmanship',
-    false,
-  ),
-  new Question(2, 'Explain Dependency Injection', 'Backend Development', true),
-  new Question(3, 'What are Web Components?', 'Frontend Development', false),
-];
+import { createMockQuestionState } from './testing/mock-state';
+import { loadQuestionsWithCategory, resetState } from './testing/story-actions';
 
 const meta: Meta<QuestionListComponent> = {
   title: 'Components/QuestionList',
   component: QuestionListComponent,
-  providers: [
-    {
-      provide: GetQuestionsUseCase,
-      useValue: { execute: () => of(mockQuestions) },
-    },
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: QuestionState,
+          useFactory: () => createMockQuestionState(),
+        },
+      ],
+    }),
   ],
 };
 
 export default meta;
 type Story = StoryObj<QuestionListComponent>;
 
-export const Default: Story = {};
+export const Initial: Story = {};
+
+export const WithCategory: Story = {
+  play: async () => {
+    const mockQuestionState = createMockQuestionState();
+    await resetState(mockQuestionState);
+    await loadQuestionsWithCategory(mockQuestionState);
+  },
+};
