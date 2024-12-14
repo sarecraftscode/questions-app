@@ -1769,7 +1769,7 @@
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "<div class=\"mt-6\">\n  <div class=\"bg-gray-200 rounded-full h-2.5\">\n    <div class=\"bg-blue-600 h-2.5 rounded-full\"\n         [style.width]=\"percentage + '%'\">\n    </div>\n  </div>\n  <p class=\"text-center mt-2\">\n    Progress: {{ current }}/{{ total }} questions\n  </p>\n</div>\n"
+            "templateData": "<div class=\"mt-6\">\n  <div class=\"bg-gray-200 rounded-full h-2.5\">\n    <div\n      class=\"bg-blue-600 h-2.5 rounded-full\"\n      [style.width]=\"percentage + '%'\"\n    ></div>\n  </div>\n  <p class=\"text-center mt-2\">Progress: {{ current }}/{{ total }} questions</p>\n</div>\n"
         },
         {
             "name": "QuestionCardComponent",
@@ -2183,7 +2183,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Question[]",
-                "defaultValue": "[\n  new Question(\n    1,\n    'What is Clean Architecture and how does it improve software design?',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    2,\n    'Explain Test-Driven Development (TDD) and its benefits',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    3,\n    'What are the SOLID principles and why are they important?',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    4,\n    'How do you implement Dependency Injection in a Spring application?',\n    'backend-development',\n    false,\n  ),\n  new Question(\n    5,\n    'Explain the Virtual DOM concept in React',\n    'frontend-development',\n    false,\n  ),\n]"
+                "defaultValue": "[\n  new Question(\n    1,\n    'What is Clean Architecture and how does it improve software design?',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    2,\n    'Explain Test-Driven Development (TDD) and its benefits',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    3,\n    'What are the SOLID principles and why are they important?',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    4,\n    'How do you implement Dependency Injection in a Spring application?',\n    'backend-development',\n    false,\n  ),\n  new Question(\n    5,\n    'Explain the Virtual DOM concept in React',\n    'frontend-development',\n    false,\n  ),\n  new Question(6, 'What is TDD?', 'software-craftsmanship', false),\n]"
             },
             {
                 "name": "QUESTION_COUNT_OPTIONS",
@@ -2392,7 +2392,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Question[]",
-                    "defaultValue": "[\n  new Question(\n    1,\n    'What is Clean Architecture and how does it improve software design?',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    2,\n    'Explain Test-Driven Development (TDD) and its benefits',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    3,\n    'What are the SOLID principles and why are they important?',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    4,\n    'How do you implement Dependency Injection in a Spring application?',\n    'backend-development',\n    false,\n  ),\n  new Question(\n    5,\n    'Explain the Virtual DOM concept in React',\n    'frontend-development',\n    false,\n  ),\n]"
+                    "defaultValue": "[\n  new Question(\n    1,\n    'What is Clean Architecture and how does it improve software design?',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    2,\n    'Explain Test-Driven Development (TDD) and its benefits',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    3,\n    'What are the SOLID principles and why are they important?',\n    'software-craftsmanship',\n    false,\n  ),\n  new Question(\n    4,\n    'How do you implement Dependency Injection in a Spring application?',\n    'backend-development',\n    false,\n  ),\n  new Question(\n    5,\n    'Explain the Virtual DOM concept in React',\n    'frontend-development',\n    false,\n  ),\n  new Question(6, 'What is TDD?', 'software-craftsmanship', false),\n]"
                 }
             ]
         },
