@@ -1,21 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { render, screen } from '@testing-library/angular';
+import { describe, expect, it } from 'vitest';
 import { QuestionViewerComponent } from './question-viewer.component';
 
 describe('QuestionViewerComponent', () => {
-  let component: QuestionViewerComponent;
-  let fixture: ComponentFixture<QuestionViewerComponent>;
+  it('should create', async () => {
+    await render(QuestionViewerComponent);
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-    imports: [QuestionViewerComponent]
-});
-    fixture = TestBed.createComponent(QuestionViewerComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(screen).toBeTruthy();
   });
 });

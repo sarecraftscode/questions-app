@@ -1,21 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { render, screen } from '@testing-library/angular';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { PricingPageComponent } from './pricing-page.component';
 
 describe('PricingPageComponent', () => {
-  let component: PricingPageComponent;
-  let fixture: ComponentFixture<PricingPageComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-    imports: [PricingPageComponent]
-});
-    fixture = TestBed.createComponent(PricingPageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  beforeEach(async () => {
+    await render(PricingPageComponent);
   });
 
   it('should create', () => {
+    const component = screen.getByTestId('pricing-page');
     expect(component).toBeTruthy();
   });
 });

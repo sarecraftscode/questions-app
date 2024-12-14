@@ -1,21 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { render, screen } from '@testing-library/angular';
 import { LandingPageComponent } from './landing-page.component';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('LandingPageComponent', () => {
-  let component: LandingPageComponent;
-  let fixture: ComponentFixture<LandingPageComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-    imports: [LandingPageComponent]
-});
-    fixture = TestBed.createComponent(LandingPageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  beforeEach(async () => {
+    await render(LandingPageComponent);
   });
 
   it('should create', () => {
+    const component = screen.getByTestId('landing-page');
     expect(component).toBeTruthy();
   });
 });

@@ -1,21 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { render, screen } from '@testing-library/angular';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { CategorySelectionComponent } from './category-selection.component';
 
 describe('CategorySelectionComponent', () => {
-  let component: CategorySelectionComponent;
-  let fixture: ComponentFixture<CategorySelectionComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-    imports: [CategorySelectionComponent]
-});
-    fixture = TestBed.createComponent(CategorySelectionComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  beforeEach(async () => {
+    await render(CategorySelectionComponent);
   });
 
   it('should create', () => {
+    const component = screen.getByTestId('category-selection');
     expect(component).toBeTruthy();
   });
 });

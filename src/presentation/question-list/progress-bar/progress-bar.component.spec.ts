@@ -1,11 +1,13 @@
-import { describe, it, expect } from 'vitest';
+import { render } from '@testing-library/angular';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { ProgressBarComponent } from './progress-bar.component';
 
 describe('ProgressBarComponent', () => {
   let component: ProgressBarComponent;
 
-  beforeEach(() => {
-    component = new ProgressBarComponent();
+  beforeEach(async () => {
+    const { fixture } = await render(ProgressBarComponent);
+    component = fixture.componentInstance;
   });
 
   it('should initialize with default values', () => {

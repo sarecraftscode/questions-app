@@ -1,13 +1,17 @@
-import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/angular';
+import { Question } from 'src/domain/entities/question.entity';
+import { describe, expect, it } from 'vitest';
 import { QuestionCardComponent } from './question-card.component';
-import { QuestionImpl } from 'src/domain/entities/question.entity';
 
 describe('QuestionCardComponent', () => {
-  it('should create with question input', () => {
-    const component = new QuestionCardComponent();
-    const question = new QuestionImpl(1, 'Test Question', 'Category', false);
-    component.question = question;
+  it('should create with question input', async () => {
+    const question = new Question(1, 'Test Question', 'Category', false);
 
-    expect(component.question).toBe(question);
+    await render(QuestionCardComponent, {
+      componentProperties: { question },
+    });
+
+    const questionElement = screen.getByText('Test Question');
+    expect(questionElement).toBeTruthy();
   });
 });
